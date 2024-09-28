@@ -10,7 +10,7 @@
 
 #define STACK_ASSERT(stk)                                   \
 {                                                           \
-    StkCondition condition = StackOK(stk);                  \
+    StkError condition = StackOK(stk);                  \
     if (condition != STK_OK)                                \
     {                                                       \
         fprintf(stderr, "%s", StackStrErr(condition));      \

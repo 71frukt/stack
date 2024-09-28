@@ -73,17 +73,17 @@ void StackResize(Stack_t *stk, ResizeValue resize_val)
     STACK_ASSERT(stk);
 } 
 
-StackElem_t *StkDataRecalloc(Stack_t *stk_ptr, size_t new_data_size)
+StackElem_t *StkDataRecalloc(Stack_t *stk, size_t new_data_size)
 {
-    STACK_ASSERT(stk_ptr);
+    STACK_ASSERT(stk);
     
     StackElem_t *res_ptr = NULL;
-    res_ptr = (StackElem_t *) realloc(stk_ptr->data, new_data_size * sizeof(StackElem_t));
-    memset((StackElem_t *) res_ptr + stk_ptr->capacity, 0, (new_data_size - stk_ptr->capacity) * sizeof(StackElem_t));
+    res_ptr = (StackElem_t *) realloc(stk->data, new_data_size * sizeof(StackElem_t));
+    memset((StackElem_t *) res_ptr + stk->capacity, 0, (new_data_size - stk->capacity) * sizeof(StackElem_t));
 
-    fprintf(stderr, "\nRECALLOC!\n");
+    fprintf(stk->logs_file, "\nRECALLOC!\n");
 
-    STACK_ASSERT(stk_ptr);
+    STACK_ASSERT(stk);
 
     return res_ptr;
 }
@@ -91,24 +91,24 @@ StackElem_t *StkDataRecalloc(Stack_t *stk_ptr, size_t new_data_size)
 
 void StackDump(Stack_t *stk, const char *func_name, const int line)
 {
-    StkCondition stk_condition = StackOK(stk);
+    StkError stk_condition = StackOK(stk);
 
-    fprintf(stderr, "\n\nSTACK:\n");
-    fprintf(stderr, "called from : func = %s, line = %d\n", func_name, line);
-    fprintf(stderr, "born in: file = %s, func = %s, line = %d\n", stk->file_born_in, stk->func_born_in, stk->line_born_in);
-    fprintf(stderr, "size     = %d\n", stk->size);
-    fprintf(stderr, "capacity = %d\n", stk->capacity);
-    fprintf(stderr, "data [%p]: { \n", stk);
+    fprintf(stk->logs_file, "\n\nSTACK:\n");
+    fprintf(stk->logs_file, "called from : func = %s, line = %d\n", func_name, line);
+    fprintf(stk->logs_file, "born in: file = %s, func = %s, line = %d\n", stk->file_born_in, stk->func_born_in, stk->line_born_in);
+    fprintf(stk->logs_file, "size     = %d\n", stk->size);
+    fprintf(stk->logs_file, "capacity = %d\n", stk->capacity);
+    fprintf(stk->logs_file, "data [%p]: { \n", stk);
 
     if (stk_condition != STK_PTR_DATA_ERR && stk_condition != STK_DATA_ERR && stk_condition != STK_SIZE_ERR)
         for (int i = 0; i < stk->size; i++)
-            fprintf(stderr, "   data[%d] = %d \n", i, stk->data[i]);
+            fprintf(stk->logs_file, "   data[%d] = %d \n", i, stk->data[i]);
 
-    fprintf(stderr, "}");
+    fprintf(stk->logs_file, "}");
 
 }
 
-StkCondition StackOK(Stack_t *stk)
+StkError StackOK(Stack_t *stk)
 {
     if (stk == NULL)
         return STK_PTR_DATA_ERR;
@@ -125,7 +125,7 @@ StkCondition StackOK(Stack_t *stk)
     return STK_OK;    
 }
 
-const char *StackStrErr(StkCondition err)
+const char *StackStrErr(StkError err)
 {
     #define DESCR_(err)                         \
         case err: return #err; break;

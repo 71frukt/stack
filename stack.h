@@ -15,7 +15,7 @@ enum ResizeValue
     DECREASE
 };
 
-enum StkCondition
+enum StkError
 {
     STK_OK,
     STK_PTR_DATA_ERR,
@@ -47,7 +47,7 @@ void StackDump      (Stack_t *stk, const char *func_name, const int line);
 
 StackElem_t *StkDataRecalloc(Stack_t *stk_ptr, size_t new_data_size);
 
-StkCondition StackOK (Stack_t *stk);
-const char *StackStrErr(StkCondition err);
+StkError StackOK (Stack_t *stk);
+const char *StackStrErr(StkError err);
 
 #endif
