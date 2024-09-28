@@ -10,6 +10,16 @@ void StackInit(Stack_t *stk)
     STACK_ASSERT(stk);
 }
 
+void StackDestruct(Stack_t *stk)
+{
+    STACK_ASSERT(stk);
+
+    free(stk->data);
+    stk->data = NULL;
+    stk->capacity = 0;
+    stk->size = 0;
+}
+
 void StackPush(Stack_t *stk, StackElem_t value)
 {
     STACK_ASSERT(stk);
@@ -81,25 +91,21 @@ StackElem_t *StkDataRecalloc(Stack_t *stk_ptr, size_t new_data_size)
 
 void StackDump(Stack_t *stk, const char *func_name, const int line)
 {
+    StkCondition stk_condition = StackOK(stk);
+
     fprintf(stderr, "\n\nSTACK:\n");
     fprintf(stderr, "called from : func = %s, line = %d\n", func_name, line);
     fprintf(stderr, "born in: file = %s, func = %s, line = %d\n", stk->file_born_in, stk->func_born_in, stk->line_born_in);
     fprintf(stderr, "size     = %d\n", stk->size);
     fprintf(stderr, "capacity = %d\n", stk->capacity);
-    fprintf(stderr, "data [%p] \n", stk);
-    fprintf(stderr, "data[size - 1] = %d\n", stk->data[stk->size - 1]);
+    fprintf(stderr, "data [%p]: { \n", stk);
 
-    fprintf(stderr, "stack elements :  "); // TODO: поправить вывод
-// data: {
-    // data[0] = 100
-    // data[1] = 150
-    // 
-// 
-// }
-    for (int i = 0; i < stk->size; i++)
-    {
-        fprintf(stderr, "%d ", stk->data[i]);
-    }
+    if (stk_condition != STK_PTR_DATA_ERR && stk_condition != STK_DATA_ERR && stk_condition != STK_SIZE_ERR)
+        for (int i = 0; i < stk->size; i++)
+            fprintf(stderr, "   data[%d] = %d \n", i, stk->data[i]);
+
+    fprintf(stderr, "}");
+
 }
 
 StkCondition StackOK(Stack_t *stk)
