@@ -24,6 +24,18 @@ enum StkError
     STK_CAPACITY_ERR
 };
 
+enum StkFuncErr
+{
+    FUNC_OK,
+    FUNK_ERR
+};
+
+enum StkAssertRes
+{
+    STK_ASSERT_OK,
+    STK_ASSERT_ERR
+};
+
 struct Stack_t
 {
     ON_DEBUG(const int line_born_in);
@@ -45,9 +57,10 @@ void StackPop       (Stack_t *stk, StackElem_t *stk_elem);
 void StackResize    (Stack_t *stk, ResizeValue resize_val);
 void StackDump      (Stack_t *stk, const char *func_name, const int line);
 
-StackElem_t *StkDataRecalloc(Stack_t *stk_ptr, size_t new_data_size);
+StackElem_t *StackDataRecalloc(Stack_t *stk_ptr, size_t new_data_size);
 
 StkError StackOK (Stack_t *stk);
 const char *StackStrErr(StkError err);
+StkAssertRes StackAssert(Stack_t *stk);
 
 #endif

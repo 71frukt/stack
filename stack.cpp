@@ -65,7 +65,7 @@ void StackResize(Stack_t *stk, ResizeValue resize_val)
 
     int new_capacity = (resize_val == INCREASE) ? stk->capacity * 2 : stk->capacity / 2;
 
-    stk->data = (StackElem_t *) StkDataRecalloc(stk, new_capacity);
+    stk->data = (StackElem_t *) StackDataRecalloc(stk, new_capacity);
     stk->capacity = new_capacity;
 
     ON_DEBUG(STACK_DUMP(stk));
@@ -73,7 +73,7 @@ void StackResize(Stack_t *stk, ResizeValue resize_val)
     STACK_ASSERT(stk);
 } 
 
-StackElem_t *StkDataRecalloc(Stack_t *stk, size_t new_data_size)
+StackElem_t *StackDataRecalloc(Stack_t *stk, size_t new_data_size)
 {
     STACK_ASSERT(stk);
     
@@ -105,7 +105,6 @@ void StackDump(Stack_t *stk, const char *func_name, const int line)
             fprintf(stk->logs_file, "   data[%d] = %d \n", i, stk->data[i]);
 
     fprintf(stk->logs_file, "}");
-
 }
 
 StkError StackOK(Stack_t *stk)
@@ -145,4 +144,16 @@ const char *StackStrErr(StkError err)
     return NULL;
 
     #undef DESCR_
+}
+
+StkAssertRes StackAssert(Stack_t *stk)
+{
+    StkError condition = StackOK(stk);                
+    if (condition != STK_OK)                          
+    {                                                 
+        fprintf(stderr, "%s\n", StackStrErr(condition));
+        return STK_ASSERT_ERR;                               
+    } 
+
+    return STK_ASSERT_OK;
 }

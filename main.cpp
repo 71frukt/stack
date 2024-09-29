@@ -6,7 +6,7 @@
 
 int main()
 {
-    fprintf(stderr, "\n START");
+    fprintf(stderr, "\n START \n");
 
 
     Stack_t stack = {INIT_DEBUG_STKVARS};
@@ -22,5 +22,5 @@ int main()
     StackElem_t el = 0;
     StackPop(&stack, &el);
 
-    fprintf(stderr, "\n END \n");
+    fprintf(stderr, "\n END \n"); 
 }

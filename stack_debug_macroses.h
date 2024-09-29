@@ -8,15 +8,7 @@
     .func_born_in = __func__,                               \
     .logs_file = fopen("logs.txt", "w")                     \
 
-#define STACK_ASSERT(stk)                                   \
-{                                                           \
-    StkError condition = StackOK(stk);                  \
-    if (condition != STK_OK)                                \
-    {                                                       \
-        fprintf(stderr, "%s", StackStrErr(condition));      \
-        assert(0);                                          \
-    }                                                       \
-}
+#define STACK_ASSERT(stk)  StackAssert(stk)
 
 #define ON_DEBUG(...) __VA_ARGS__
 
