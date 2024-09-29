@@ -2,28 +2,33 @@
 #include <cstring>
 #include "stack.h"
 
-void StackInit(Stack_t *stk)
+StkAssertRes StackInit(Stack_t *stk)
 {
     stk->data = (StackElem_t *) calloc(0, sizeof(StackElem_t));
     stk->size = 0;
     stk->capacity = 0;
-    STACK_ASSERT(stk);
+
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+    return STK_ASSERT_OK;
 }
 
-void StackDestruct(Stack_t *stk)
+StkAssertRes StackDestruct(Stack_t *stk)
 {
-    STACK_ASSERT(stk);
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
 
     free(stk->data);
     stk->data = NULL;
     stk->capacity = 0;
     stk->size = 0;
+   
+    return STK_ASSERT_OK;
 }
 
-void StackPush(Stack_t *stk, StackElem_t value)
+StkAssertRes StackPush(Stack_t *stk, StackElem_t value)
 {
-    STACK_ASSERT(stk);
-
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
 
     if (stk->size >= stk->capacity)
@@ -34,14 +39,14 @@ void StackPush(Stack_t *stk, StackElem_t value)
     stk->data[stk->size] = value; 
     stk->size++;
 
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
-
-    STACK_ASSERT(stk);   
+    return STK_ASSERT_OK;  
 }
 
-void StackPop(Stack_t *stk, StackElem_t *stk_elem)
+StkAssertRes StackPop(Stack_t *stk, StackElem_t *stk_elem)
 {
-    STACK_ASSERT(stk);
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
 
     if ((stk->size <= stk->capacity / 4) && (stk->capacity > START_STACK_SIZE))
@@ -51,13 +56,15 @@ void StackPop(Stack_t *stk, StackElem_t *stk_elem)
 
     *stk_elem = stk->data[stk->size - 1];
     stk->size--;
-    STACK_ASSERT(stk);
+
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+    return STK_ASSERT_OK;
 }
 
-void StackResize(Stack_t *stk, ResizeValue resize_val)
+StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
 {
-    STACK_ASSERT(stk);
-
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
 
     if (stk->capacity == 0)
@@ -68,22 +75,24 @@ void StackResize(Stack_t *stk, ResizeValue resize_val)
     stk->data = (StackElem_t *) StackDataRecalloc(stk, new_capacity);
     stk->capacity = new_capacity;
 
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
-
-    STACK_ASSERT(stk);
+    return STK_ASSERT_OK;
 } 
 
 StackElem_t *StackDataRecalloc(Stack_t *stk, size_t new_data_size)
 {
-    STACK_ASSERT(stk);
-    
+    STACK_ASSERT(stk, NULL);
+    ON_DEBUG(STACK_DUMP(stk));
+
     StackElem_t *res_ptr = NULL;
     res_ptr = (StackElem_t *) realloc(stk->data, new_data_size * sizeof(StackElem_t));
     memset((StackElem_t *) res_ptr + stk->capacity, 0, (new_data_size - stk->capacity) * sizeof(StackElem_t));
 
     fprintf(stk->logs_file, "\nRECALLOC!\n");
 
-    STACK_ASSERT(stk);
+    STACK_ASSERT(stk, NULL);
+    ON_DEBUG(STACK_DUMP(stk));
 
     return res_ptr;
 }
@@ -93,7 +102,7 @@ void StackDump(Stack_t *stk, const char *func_name, const int line)
 {
     StkError stk_condition = StackOK(stk);
 
-    fprintf(stk->logs_file, "\n\nSTACK:\n");
+    fprintf(stk->logs_file, "STACK:\n");
     fprintf(stk->logs_file, "called from : func = %s, line = %d\n", func_name, line);
     fprintf(stk->logs_file, "born in: file = %s, func = %s, line = %d\n", stk->file_born_in, stk->func_born_in, stk->line_born_in);
     fprintf(stk->logs_file, "size     = %d\n", stk->size);
@@ -104,7 +113,7 @@ void StackDump(Stack_t *stk, const char *func_name, const int line)
         for (int i = 0; i < stk->size; i++)
             fprintf(stk->logs_file, "   data[%d] = %d \n", i, stk->data[i]);
 
-    fprintf(stk->logs_file, "}");
+    fprintf(stk->logs_file, "}\n\n");
 }
 
 StkError StackOK(Stack_t *stk)
@@ -151,7 +160,8 @@ StkAssertRes StackAssert(Stack_t *stk)
     StkError condition = StackOK(stk);                
     if (condition != STK_OK)                          
     {                                                 
-        fprintf(stderr, "%s\n", StackStrErr(condition));
+        fprintf(stk->logs_file, "\n !!! %s in ", StackStrErr(condition));
+        fprintf(stderr,         "\n !!! %s in ", StackStrErr(condition));
         return STK_ASSERT_ERR;                               
     } 
 

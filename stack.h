@@ -24,12 +24,6 @@ enum StkError
     STK_CAPACITY_ERR
 };
 
-enum StkFuncErr
-{
-    FUNC_OK,
-    FUNK_ERR
-};
-
 enum StkAssertRes
 {
     STK_ASSERT_OK,
@@ -50,11 +44,11 @@ struct Stack_t
 
 const StackElem_t START_STACK_SIZE = 1;
 
-void StackInit      (Stack_t *stk);
-void StackDestruct  (Stack_t *stk);
-void StackPush      (Stack_t *stk, StackElem_t value);
-void StackPop       (Stack_t *stk, StackElem_t *stk_elem);
-void StackResize    (Stack_t *stk, ResizeValue resize_val);
+StkAssertRes StackInit      (Stack_t *stk);
+StkAssertRes StackDestruct  (Stack_t *stk);
+StkAssertRes StackPush      (Stack_t *stk, StackElem_t value);
+StkAssertRes StackPop       (Stack_t *stk, StackElem_t *stk_elem);
+StkAssertRes StackResize    (Stack_t *stk, ResizeValue resize_val);
 void StackDump      (Stack_t *stk, const char *func_name, const int line);
 
 StackElem_t *StackDataRecalloc(Stack_t *stk_ptr, size_t new_data_size);

@@ -21,6 +21,10 @@ int main()
  
     StackElem_t el = 0;
     StackPop(&stack, &el);
+    StackPop(&stack, &el);
+    StackPop(&stack, &el);
+
+    StackDestruct(&stack);
 
     fprintf(stderr, "\n END \n"); 
 }

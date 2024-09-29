@@ -8,7 +8,13 @@
     .func_born_in = __func__,                               \
     .logs_file = fopen("logs.txt", "w")                     \
 
-#define STACK_ASSERT(stk)  StackAssert(stk)
+#define STACK_ASSERT(stk, returned_error)                   \
+    if (StackAssert(stk) == STK_ASSERT_ERR)                 \
+    {                                                       \
+        STACK_DUMP(stk);                                    \
+        return returned_error;                              \
+    }                                                       \
+
 
 #define ON_DEBUG(...) __VA_ARGS__
 
