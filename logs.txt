@@ -4,22 +4,22 @@ born in: file = main.cpp, func = main, line = 11
 size     = 0
 capacity = 0
 left canar : 987654321  			right:		  987654321
-&left canar: 0000023A68601440    &right:       0000023A68601448 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601448
+&left canar: 000001C713411440    &right:       000001C713411448 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411448
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
 }
 
 STACK:
-called from : func = StackPush, line = 96
+called from : func = StackPush, line = 97
 born in: file = main.cpp, func = main, line = 11
 size     = 0
 capacity = 0
 left canar : 987654321  			right:		  987654321
-&left canar: 0000023A68601440    &right:       0000023A68601448 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601448
+&left canar: 000001C713411440    &right:       000001C713411448 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411448
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
 }
 
 STACK:
@@ -28,24 +28,24 @@ born in: file = main.cpp, func = main, line = 11
 size     = 0
 capacity = 0
 left canar : 987654321  			right:		  987654321
-&left canar: 0000023A68601440    &right:       0000023A68601448 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601448
+&left canar: 000001C713411440    &right:       000001C713411448 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411448
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
 }
 
 
 RECALLOC!
 STACK:
-called from : func = StackDataRecalloc, line = 88
+called from : func = StackDataRecalloc, line = 89
 born in: file = main.cpp, func = main, line = 11
 size     = 0
 capacity = 1
-left canar : 987654321  			right:		  973078528
-&left canar: 0000023A68601440    &right:       0000023A68601450 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A6860144C
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411450 
+&data[0]   : 000001C713411448    &data[capa] : 000001C71341144C
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 987654321 
 }
 
@@ -54,67 +54,67 @@ called from : func = StackResize, line = 53
 born in: file = main.cpp, func = main, line = 11
 size     = 0
 capacity = 2
-left canar : 987654321  			right:		  973078528
-&left canar: 0000023A68601440    &right:       0000023A68601450 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411450 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411450
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 987654321 
    data[1] = 0 
 }
 
 STACK:
-called from : func = StackPush, line = 109
+called from : func = StackPush, line = 110
 born in: file = main.cpp, func = main, line = 11
 size     = 1
 capacity = 2
-left canar : 987654321  			right:		  973078528
-&left canar: 0000023A68601440    &right:       0000023A68601450 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411450 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411450
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 0 
 }
 
 STACK:
-called from : func = StackPush, line = 96
+called from : func = StackPush, line = 97
 born in: file = main.cpp, func = main, line = 11
 size     = 1
 capacity = 2
-left canar : 987654321  			right:		  973078528
-&left canar: 0000023A68601440    &right:       0000023A68601450 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411450 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411450
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 0 
 }
 
 STACK:
-called from : func = StackPush, line = 109
+called from : func = StackPush, line = 110
 born in: file = main.cpp, func = main, line = 11
 size     = 2
 capacity = 2
-left canar : 987654321  			right:		  973078528
-&left canar: 0000023A68601440    &right:       0000023A68601450 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411450 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411450
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
 }
 
 STACK:
-called from : func = StackPush, line = 96
+called from : func = StackPush, line = 97
 born in: file = main.cpp, func = main, line = 11
 size     = 2
 capacity = 2
-left canar : 987654321  			right:		  973078528
-&left canar: 0000023A68601440    &right:       0000023A68601450 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411450 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411450
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
 }
@@ -124,11 +124,11 @@ called from : func = StackResize, line = 42
 born in: file = main.cpp, func = main, line = 11
 size     = 2
 capacity = 2
-left canar : 987654321  			right:		  973078528
-&left canar: 0000023A68601440    &right:       0000023A68601450 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411450 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411450
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
 }
@@ -136,15 +136,15 @@ data [000000B0A25FFB90]: {
 
 RECALLOC!
 STACK:
-called from : func = StackDataRecalloc, line = 88
+called from : func = StackDataRecalloc, line = 89
 born in: file = main.cpp, func = main, line = 11
 size     = 2
 capacity = 2
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601458 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411458 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411450
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
 }
@@ -154,11 +154,11 @@ called from : func = StackResize, line = 53
 born in: file = main.cpp, func = main, line = 11
 size     = 2
 capacity = 4
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601458 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411458 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411458
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 0 
@@ -166,15 +166,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPush, line = 109
+called from : func = StackPush, line = 110
 born in: file = main.cpp, func = main, line = 11
 size     = 3
 capacity = 4
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601458 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411458 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411458
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -182,15 +182,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPush, line = 96
+called from : func = StackPush, line = 97
 born in: file = main.cpp, func = main, line = 11
 size     = 3
 capacity = 4
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601458 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411458 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411458
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -198,15 +198,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPush, line = 109
+called from : func = StackPush, line = 110
 born in: file = main.cpp, func = main, line = 11
 size     = 4
 capacity = 4
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601458 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411458 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411458
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -214,15 +214,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPush, line = 96
+called from : func = StackPush, line = 97
 born in: file = main.cpp, func = main, line = 11
 size     = 4
 capacity = 4
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601458 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411458 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411458
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -234,11 +234,11 @@ called from : func = StackResize, line = 42
 born in: file = main.cpp, func = main, line = 11
 size     = 4
 capacity = 4
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601458 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411458 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411458
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -248,15 +248,15 @@ data [000000B0A25FFB90]: {
 
 RECALLOC!
 STACK:
-called from : func = StackDataRecalloc, line = 88
+called from : func = StackDataRecalloc, line = 89
 born in: file = main.cpp, func = main, line = 11
 size     = 4
 capacity = 4
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411458
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -268,11 +268,11 @@ called from : func = StackResize, line = 53
 born in: file = main.cpp, func = main, line = 11
 size     = 4
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -284,15 +284,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPush, line = 109
+called from : func = StackPush, line = 110
 born in: file = main.cpp, func = main, line = 11
 size     = 5
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -304,15 +304,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPush, line = 96
+called from : func = StackPush, line = 97
 born in: file = main.cpp, func = main, line = 11
 size     = 5
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -324,15 +324,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPush, line = 109
+called from : func = StackPush, line = 110
 born in: file = main.cpp, func = main, line = 11
 size     = 6
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -344,15 +344,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPush, line = 96
+called from : func = StackPush, line = 97
 born in: file = main.cpp, func = main, line = 11
 size     = 6
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -364,15 +364,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPush, line = 109
+called from : func = StackPush, line = 110
 born in: file = main.cpp, func = main, line = 11
 size     = 7
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -384,15 +384,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPop, line = 116
+called from : func = StackPop, line = 117
 born in: file = main.cpp, func = main, line = 11
 size     = 7
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -404,15 +404,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPop, line = 128
+called from : func = StackPop, line = 129
 born in: file = main.cpp, func = main, line = 11
 size     = 6
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -424,15 +424,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPop, line = 116
+called from : func = StackPop, line = 117
 born in: file = main.cpp, func = main, line = 11
 size     = 6
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -444,15 +444,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPop, line = 128
+called from : func = StackPop, line = 129
 born in: file = main.cpp, func = main, line = 11
 size     = 5
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -464,15 +464,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPop, line = 116
+called from : func = StackPop, line = 117
 born in: file = main.cpp, func = main, line = 11
 size     = 5
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
    data[2] = 20 
@@ -484,25 +484,15 @@ data [000000B0A25FFB90]: {
 }
 
 STACK:
-called from : func = StackPop, line = 128
+called from : func = StackPop, line = 129
 born in: file = main.cpp, func = main, line = 11
 size     = 4
 capacity = 8
-left canar : 987654321  			right:		  0
-&left canar: 0000023A68601440    &right:       0000023A68601468 
-&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+left canar : 987654321  			right:		  987654321
+&left canar: 000001C713411440    &right:       000001C713411468 
+&data[0]   : 000001C713411448    &data[capa] : 000001C713411468
 
-data [000000B0A25FFB90]: { 
+data [00000048733FFCD0]: { 
    data[0] = 10 
    data[1] = 15 
-   data[2] = 20 
-   data[3] = 30 
-   data[4] = 40 
-   data[5] = 50 
-   data[6] = 60 
-   data[7] = 0 
-}
-
-STACK:
-called from : func = StackDestruct, line = 29
-born in: f
+   data

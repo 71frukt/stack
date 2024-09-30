@@ -77,12 +77,13 @@ fprintf(stderr, "new_byte_capa = %lld; residual = %lld; new_data_bytesize = %lld
     *(stk->left_data_canary_ptr)  = CANARY_VALUE; 
     *(stk->right_data_canary_ptr) = CANARY_VALUE;
 
+    memset(stk->data + stk->capacity, 0, new_byte_capa + residual - stk->capacity * sizeof(StackElem_t));
+
 fprintf(stderr, "left canar : %lld  right :       %lld\n", *stk->left_data_canary_ptr, *stk->right_data_canary_ptr);
 fprintf(stderr, "&left canar: %p    &right:       %p \n",  stk->left_data_canary_ptr, stk->right_data_canary_ptr);
 fprintf(stderr, "data[0]    : %d    data[capa]  : %d\n", *stk->data, *stk->data + stk->capacity);
 fprintf(stderr, "&data[0]   : %p    &data[capa] : %p\n\n", &stk->data[0], stk->data + stk->capacity);
 
-    memset(stk->data + stk->capacity, 0, new_byte_capa + residual - stk->capacity);
 
     STACK_ASSERT(stk, NULL);
     ON_DEBUG(STACK_DUMP(stk));
