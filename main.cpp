@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define DEBUG
+// #define DEBUG
 //typedef int StackElem_t;
 #include "stack.h"
 
@@ -8,16 +8,15 @@ int main()
 {
     fprintf(stderr, "\n START \n");
 
-
     Stack_t stack = {INIT_DEBUG_STKVARS};
     StackInit(&stack);
-    StackPush(&stack, 100);
-    StackPush(&stack, 150);
-    StackPush(&stack, 200);
-    StackPush(&stack, 300);
-    StackPush(&stack, 400);
-    StackPush(&stack, 500);
-    StackPush(&stack, 600);
+    StackPush(&stack, 10);
+    StackPush(&stack, 15);
+    StackPush(&stack, 20);
+    StackPush(&stack, 30);
+    StackPush(&stack, 40);
+    StackPush(&stack, 50);
+    StackPush(&stack, 60);
  
     StackElem_t el = 0;
     StackPop(&stack, &el);

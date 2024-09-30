@@ -1,0 +1,508 @@
+STACK:
+called from : func = StackInit, line = 22
+born in: file = main.cpp, func = main, line = 11
+size     = 0
+capacity = 0
+left canar : 987654321  			right:		  987654321
+&left canar: 0000023A68601440    &right:       0000023A68601448 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601448
+
+data [000000B0A25FFB90]: { 
+}
+
+STACK:
+called from : func = StackPush, line = 96
+born in: file = main.cpp, func = main, line = 11
+size     = 0
+capacity = 0
+left canar : 987654321  			right:		  987654321
+&left canar: 0000023A68601440    &right:       0000023A68601448 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601448
+
+data [000000B0A25FFB90]: { 
+}
+
+STACK:
+called from : func = StackResize, line = 42
+born in: file = main.cpp, func = main, line = 11
+size     = 0
+capacity = 0
+left canar : 987654321  			right:		  987654321
+&left canar: 0000023A68601440    &right:       0000023A68601448 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601448
+
+data [000000B0A25FFB90]: { 
+}
+
+
+RECALLOC!
+STACK:
+called from : func = StackDataRecalloc, line = 88
+born in: file = main.cpp, func = main, line = 11
+size     = 0
+capacity = 1
+left canar : 987654321  			right:		  973078528
+&left canar: 0000023A68601440    &right:       0000023A68601450 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A6860144C
+
+data [000000B0A25FFB90]: { 
+   data[0] = 987654321 
+}
+
+STACK:
+called from : func = StackResize, line = 53
+born in: file = main.cpp, func = main, line = 11
+size     = 0
+capacity = 2
+left canar : 987654321  			right:		  973078528
+&left canar: 0000023A68601440    &right:       0000023A68601450 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+
+data [000000B0A25FFB90]: { 
+   data[0] = 987654321 
+   data[1] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 109
+born in: file = main.cpp, func = main, line = 11
+size     = 1
+capacity = 2
+left canar : 987654321  			right:		  973078528
+&left canar: 0000023A68601440    &right:       0000023A68601450 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 96
+born in: file = main.cpp, func = main, line = 11
+size     = 1
+capacity = 2
+left canar : 987654321  			right:		  973078528
+&left canar: 0000023A68601440    &right:       0000023A68601450 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 109
+born in: file = main.cpp, func = main, line = 11
+size     = 2
+capacity = 2
+left canar : 987654321  			right:		  973078528
+&left canar: 0000023A68601440    &right:       0000023A68601450 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+}
+
+STACK:
+called from : func = StackPush, line = 96
+born in: file = main.cpp, func = main, line = 11
+size     = 2
+capacity = 2
+left canar : 987654321  			right:		  973078528
+&left canar: 0000023A68601440    &right:       0000023A68601450 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+}
+
+STACK:
+called from : func = StackResize, line = 42
+born in: file = main.cpp, func = main, line = 11
+size     = 2
+capacity = 2
+left canar : 987654321  			right:		  973078528
+&left canar: 0000023A68601440    &right:       0000023A68601450 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+}
+
+
+RECALLOC!
+STACK:
+called from : func = StackDataRecalloc, line = 88
+born in: file = main.cpp, func = main, line = 11
+size     = 2
+capacity = 2
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601458 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601450
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+}
+
+STACK:
+called from : func = StackResize, line = 53
+born in: file = main.cpp, func = main, line = 11
+size     = 2
+capacity = 4
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601458 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 0 
+   data[3] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 109
+born in: file = main.cpp, func = main, line = 11
+size     = 3
+capacity = 4
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601458 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 96
+born in: file = main.cpp, func = main, line = 11
+size     = 3
+capacity = 4
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601458 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 109
+born in: file = main.cpp, func = main, line = 11
+size     = 4
+capacity = 4
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601458 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+}
+
+STACK:
+called from : func = StackPush, line = 96
+born in: file = main.cpp, func = main, line = 11
+size     = 4
+capacity = 4
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601458 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+}
+
+STACK:
+called from : func = StackResize, line = 42
+born in: file = main.cpp, func = main, line = 11
+size     = 4
+capacity = 4
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601458 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+}
+
+
+RECALLOC!
+STACK:
+called from : func = StackDataRecalloc, line = 88
+born in: file = main.cpp, func = main, line = 11
+size     = 4
+capacity = 4
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601458
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+}
+
+STACK:
+called from : func = StackResize, line = 53
+born in: file = main.cpp, func = main, line = 11
+size     = 4
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 0 
+   data[5] = 0 
+   data[6] = 0 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 109
+born in: file = main.cpp, func = main, line = 11
+size     = 5
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 0 
+   data[6] = 0 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 96
+born in: file = main.cpp, func = main, line = 11
+size     = 5
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 0 
+   data[6] = 0 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 109
+born in: file = main.cpp, func = main, line = 11
+size     = 6
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 50 
+   data[6] = 0 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 96
+born in: file = main.cpp, func = main, line = 11
+size     = 6
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 50 
+   data[6] = 0 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPush, line = 109
+born in: file = main.cpp, func = main, line = 11
+size     = 7
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 50 
+   data[6] = 60 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPop, line = 116
+born in: file = main.cpp, func = main, line = 11
+size     = 7
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 50 
+   data[6] = 60 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPop, line = 128
+born in: file = main.cpp, func = main, line = 11
+size     = 6
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 50 
+   data[6] = 60 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPop, line = 116
+born in: file = main.cpp, func = main, line = 11
+size     = 6
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 50 
+   data[6] = 60 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPop, line = 128
+born in: file = main.cpp, func = main, line = 11
+size     = 5
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 50 
+   data[6] = 60 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPop, line = 116
+born in: file = main.cpp, func = main, line = 11
+size     = 5
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 50 
+   data[6] = 60 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackPop, line = 128
+born in: file = main.cpp, func = main, line = 11
+size     = 4
+capacity = 8
+left canar : 987654321  			right:		  0
+&left canar: 0000023A68601440    &right:       0000023A68601468 
+&data[0]   : 0000023A68601448    &data[capa] : 0000023A68601468
+
+data [000000B0A25FFB90]: { 
+   data[0] = 10 
+   data[1] = 15 
+   data[2] = 20 
+   data[3] = 30 
+   data[4] = 40 
+   data[5] = 50 
+   data[6] = 60 
+   data[7] = 0 
+}
+
+STACK:
+called from : func = StackDestruct, line = 29
+born in: f

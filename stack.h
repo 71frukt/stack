@@ -33,17 +33,19 @@ enum StkAssertRes
 
 struct Stack_t
 {
-    ON_DEBUG(const int line_born_in);
-    ON_DEBUG(const char *file_born_in);
-    ON_DEBUG(const char *func_born_in);
-    ON_DEBUG(FILE *logs_file);
+    #ifdef DEBUG
+    const int line_born_in;
+    const char *file_born_in;
+    const char *func_born_in;
+    FILE *logs_file;
 
-    ON_DEBUG(canary_t *left_data_canary_ptr);
-    ON_DEBUG(canary_t *right_data_canary_ptr);
-    
-    StackElem_t *data;
+    canary_t *left_data_canary_ptr;
+    canary_t *right_data_canary_ptr;
+    #endif
+
     int size;
     int capacity;
+    StackElem_t *data;
 };
 
 const StackElem_t START_STACK_SIZE = 1;

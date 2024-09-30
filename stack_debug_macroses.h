@@ -21,7 +21,7 @@
 #else 
 
 #define INIT_DEBUG_STKVARS
-#define STACK_ASSERT(stk)
+#define STACK_ASSERT(stk, returned_error)
 #define ON_DEBUG(...)
 
 #endif
