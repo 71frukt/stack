@@ -48,7 +48,7 @@ struct Stack_t
     StackElem_t *data;
 };
 
-const StackElem_t START_STACK_SIZE = 1;
+const StackElem_t START_STACK_SIZE = 2;
 
 StkAssertRes StackInit      (Stack_t *stk);
 StkAssertRes StackDestruct  (Stack_t *stk);

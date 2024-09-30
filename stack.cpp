@@ -42,7 +42,10 @@ StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
     ON_DEBUG(STACK_DUMP(stk));
 
     if (stk->capacity == 0)
+    {
         stk->capacity = START_STACK_SIZE;
+        memset(stk->data, 0, START_STACK_SIZE * sizeof(StackElem_t));
+    }
 
     int new_capacity = (resize_val == INCREASE) ? stk->capacity * 2 : stk->capacity / 2;
 
