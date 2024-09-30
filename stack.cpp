@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cstring>
 #include "stack.h"
+#include "stack_canary.h"
 
 StkAssertRes StackInit(Stack_t *stk)
 {
@@ -23,42 +24,6 @@ StkAssertRes StackDestruct(Stack_t *stk)
     stk->capacity = 0;
     stk->size = 0;
    
-    return STK_ASSERT_OK;
-}
-
-StkAssertRes StackPush(Stack_t *stk, StackElem_t value)
-{
-    STACK_ASSERT(stk, STK_ASSERT_ERR);
-    ON_DEBUG(STACK_DUMP(stk));
-
-    if (stk->size >= stk->capacity)
-    {
-        StackResize(stk, INCREASE);
-    }
-
-    stk->data[stk->size] = value; 
-    stk->size++;
-
-    STACK_ASSERT(stk, STK_ASSERT_ERR);
-    ON_DEBUG(STACK_DUMP(stk));
-    return STK_ASSERT_OK;  
-}
-
-StkAssertRes StackPop(Stack_t *stk, StackElem_t *stk_elem)
-{
-    STACK_ASSERT(stk, STK_ASSERT_ERR);
-    ON_DEBUG(STACK_DUMP(stk));
-
-    if ((stk->size <= stk->capacity / 4) && (stk->capacity > START_STACK_SIZE))
-    {
-        StackResize(stk, DECREASE);
-    }
-
-    *stk_elem = stk->data[stk->size - 1];
-    stk->size--;
-
-    STACK_ASSERT(stk, STK_ASSERT_ERR);
-    ON_DEBUG(STACK_DUMP(stk));
     return STK_ASSERT_OK;
 }
 
@@ -97,6 +62,41 @@ StackElem_t *StackDataRecalloc(Stack_t *stk, size_t new_data_size)
     return res_ptr;
 }
 
+StkAssertRes StackPush(Stack_t *stk, StackElem_t value)
+{
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+
+    if (stk->size >= stk->capacity)
+    {
+        StackResize(stk, INCREASE);
+    }
+
+    stk->data[stk->size] = value; 
+    stk->size++;
+
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+    return STK_ASSERT_OK;  
+}
+
+StkAssertRes StackPop(Stack_t *stk, StackElem_t *stk_elem)
+{
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+
+    if ((stk->size <= stk->capacity / 4) && (stk->capacity > START_STACK_SIZE))
+    {
+        StackResize(stk, DECREASE);
+    }
+
+    *stk_elem = stk->data[stk->size - 1];
+    stk->size--;
+
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+    return STK_ASSERT_OK;
+}
 
 void StackDump(Stack_t *stk, const char *func_name, const int line)
 {

@@ -8,6 +8,7 @@ typedef int StackElem_t;
 #include <stdlib.h>
 #include <assert.h>
 #include "stack_debug_macroses.h"
+#include "stack_canary.h"
 
 enum ResizeValue
 {
@@ -36,6 +37,9 @@ struct Stack_t
     ON_DEBUG(const char *file_born_in);
     ON_DEBUG(const char *func_born_in);
     ON_DEBUG(FILE *logs_file);
+
+    ON_DEBUG(canary_t *left_data_canary_ptr);
+    ON_DEBUG(canary_t *right_data_canary_ptr);
     
     StackElem_t *data;
     int size;
