@@ -2,7 +2,7 @@
 #include <cstring>
 
 #include "stack.h"
-#include "stack_debug_macroses.h"
+#include "stack_debug.h"
 
 StkAssertRes StackCtor(Stack_t *stk)
 {
@@ -140,15 +140,18 @@ StkAssertRes StackPop(Stack_t *stk, StackElem_t *stk_elem)
 
     if ((stk->size <= stk->capacity / 4) && (stk->capacity > START_STACK_SIZE))
     {
-        if (stk->size <= 0)
-            fprintf(stderr, "SIZE <= 0! \n");
-
 fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n");
-
         StackResize(stk, DECREASE);
-        *stk_elem = stk->data[stk->size - 1];
-        stk->size--;
     }
+
+    if (stk->size <= 0)
+    {
+        fprintf(stderr, "SIZE <= 0! \n");
+        return STK_ASSERT_ERR;
+    }
+
+    *stk_elem = stk->data[stk->size - 1];
+    stk->size--;
 
     ON_HASH(stk->hash = GetDataHash(stk));
 
@@ -156,3 +159,4 @@ fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n");
     ON_DEBUG(STACK_DUMP(stk));
     return STK_ASSERT_OK;
 }
+

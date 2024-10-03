@@ -1,6 +1,24 @@
 #ifndef STACK_DEBUG_MACROSES
 #define STACK_DEBUG_MACROSES
 
+enum StkAssertRes
+{
+    STK_ASSERT_OK  = 1,
+    STK_ASSERT_ERR = 0
+};
+
+enum StkErrorEnum
+{
+    STK_OK = 0,
+
+    CANARY_ERR       = (1 << 0),
+    HASH_ERR         = (1 << 1),
+    STK_PTR_DATA_ERR = (1 << 2),
+    STK_DATA_ERR     = (1 << 3),
+    STK_SIZE_ERR     = (1 << 4),
+    STK_CAPACITY_ERR = (1 << 5)
+};
+
 
 #define STACK_DUMP(stk)  StackDump(stk, __func__, __LINE__)
 

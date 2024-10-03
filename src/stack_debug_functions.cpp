@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "stack.h"
-#include "stack_debug_macroses.h"
+#include "stack_debug.h"
 
 StkAssertRes StackAssert(Stack_t *stk, const char *file, int line, const char *func)
 {
