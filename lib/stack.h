@@ -46,18 +46,10 @@ struct Stack_t
 
 const StackElem_t START_STACK_SIZE = 2;
 
-StkAssertRes StackCtor         (Stack_t *stk);
-StkAssertRes StackDtor         (Stack_t *stk);
-StkAssertRes StackPush         (Stack_t *stk, StackElem_t value);
-StkAssertRes StackPop          (Stack_t *stk, StackElem_t *stk_elem);
-StkAssertRes StackResize       (Stack_t *stk, ResizeValue resize_val);
-StackElem_t *StackDataRecalloc (Stack_t *stk, int new_capacity);
+StkAssertRes StackCtor (Stack_t *stk);
+StkAssertRes StackDtor (Stack_t *stk);
+StkAssertRes StackPush (Stack_t *stk, StackElem_t value);
+StkAssertRes StackPop  (Stack_t *stk, StackElem_t *stk_elem);
 
-StkAssertRes StackAssert       (Stack_t *stk, const char *file, int line, const char *func);
-int          StackOK           (Stack_t *stk);
-void         StackDump         (Stack_t *stk, const char *func_name, const int line);
-size_t       GetDataHash       (Stack_t *stk);
-int          PrintStackErr     (int error);
-
-
+int          PrintStackErr (int error);
 #endif

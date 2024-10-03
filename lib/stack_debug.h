@@ -1,6 +1,8 @@
 #ifndef STACK_DEBUG_MACROSES
 #define STACK_DEBUG_MACROSES
 
+#include "stack.h"
+
 enum StkAssertRes
 {
     STK_ASSERT_OK  = 1,

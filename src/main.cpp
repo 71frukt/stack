@@ -31,7 +31,7 @@ int main()
     StackPop(&stack, &el) verified;
     StackPop(&stack, &el) verified;
     StackPop(&stack, &el) verified;
-
+    
     StackDtor(&stack);
 
     fprintf(stderr, "\n END \n"); 

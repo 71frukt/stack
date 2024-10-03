@@ -4,9 +4,18 @@
 #include "stack.h"
 #include "stack_debug.h"
 
+static StkAssertRes StackResize       (Stack_t *stk, ResizeValue resize_val);
+static StackElem_t *StackDataRecalloc (Stack_t *stk, int new_capacity);
+
+static StkAssertRes StackAssert   (Stack_t *stk, const char *file, int line, const char *func);
+static int          StackOK       (Stack_t *stk);
+static void         StackDump     (Stack_t *stk, const char *func_name, const int line);
+static size_t       GetDataHash   (Stack_t *stk);
+
+
 StkAssertRes StackCtor(Stack_t *stk)
 {
-    StackElem_t *whole_data = (StackElem_t *) calloc(2, CANARY_SIZE); //TODO: ON_CANARY 
+    StackElem_t *whole_data = (StackElem_t *) calloc(2, CANARY_SIZE);
     stk->data = (StackElem_t *) ((char *) whole_data + CANARY_SIZE);
     
     stk->size = 0;
@@ -43,7 +52,54 @@ StkAssertRes StackDtor(Stack_t *stk)
     return STK_ASSERT_OK;
 }
 
-StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
+StkAssertRes StackPush(Stack_t *stk, StackElem_t value)
+{
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+
+    if (stk->size >= stk->capacity)
+    {
+        StackResize(stk, INCREASE);
+    }
+
+    stk->data[stk->size] = value; 
+    stk->size++;
+
+    ON_HASH(stk->hash = GetDataHash(stk));
+
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+    return STK_ASSERT_OK;  
+}
+
+StkAssertRes StackPop(Stack_t *stk, StackElem_t *stk_elem)
+{
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+
+    if ((stk->size <= stk->capacity / 4) && (stk->capacity > START_STACK_SIZE))
+    {
+fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n");
+        StackResize(stk, DECREASE);
+    }
+
+    if (stk->size <= 0)
+    {
+        fprintf(stderr, "SIZE <= 0! \n");
+        return STK_ASSERT_ERR;
+    }
+
+    *stk_elem = stk->data[stk->size - 1];
+    stk->size--;
+
+    ON_HASH(stk->hash = GetDataHash(stk));
+
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
+    ON_DEBUG(STACK_DUMP(stk));
+    return STK_ASSERT_OK;
+}
+
+static StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
 {
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
@@ -64,16 +120,13 @@ StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
     return STK_ASSERT_OK;
 } 
 
-StackElem_t *StackDataRecalloc(Stack_t *stk, int new_capacity)
+static StackElem_t *StackDataRecalloc(Stack_t *stk, int new_capacity)
 {
 fprintf(stderr,         "\nRECALLOC!\n");
 fprintf(stderr, "nwe_capa = %d, old_capa = %d \n", new_capacity, stk->capacity);
     ON_DEBUG(fprintf(stk->logs_file, "\nRECALLOC!\n"));
 
-    //STACK_ASSERT(stk, NULL);
-    //ON_DEBUG(STACK_DUMP(stk));
     size_t new_byte_capa = new_capacity * sizeof(StackElem_t);
-    // size_t residual = (CANARY_SIZE == 0) ? 0 : (CANARY_SIZE - new_byte_capa % CANARY_SIZE) % CANARY_SIZE;
     ON_CANARY( size_t residual = (CANARY_SIZE - new_byte_capa % CANARY_SIZE) % CANARY_SIZE );
 
     size_t new_data_bytesize = new_byte_capa  ON_CANARY(+ 2 * CANARY_SIZE + residual);
@@ -111,52 +164,114 @@ fprintf(stderr, "&data[0]   : %p    &data[capa] : %p\n\n", &stk->data[0], stk->d
     return stk->data;
 }
 
-StkAssertRes StackPush(Stack_t *stk, StackElem_t value)
+static StkAssertRes StackAssert(Stack_t *stk, const char *file, int line, const char *func)
 {
-    STACK_ASSERT(stk, STK_ASSERT_ERR);
-    ON_DEBUG(STACK_DUMP(stk));
+    StkError = StackOK(stk);
 
-    if (stk->size >= stk->capacity)
+    if (StkError == 0)
+        return STK_ASSERT_OK;
+    else 
     {
-        StackResize(stk, INCREASE);
-    }
-
-    stk->data[stk->size] = value; 
-    // *( (StackElem_t *) ((char *) stk->data + stk->size * sizeof(StackElem_t) + CANARY_SIZE)) = value;
-    // *DATA_EL_PTR(stk->data, stk->size) = value;
-    stk->size++;
-
-    ON_HASH(stk->hash = GetDataHash(stk));
-
-    STACK_ASSERT(stk, STK_ASSERT_ERR);
-    ON_DEBUG(STACK_DUMP(stk));
-    return STK_ASSERT_OK;  
-}
-
-StkAssertRes StackPop(Stack_t *stk, StackElem_t *stk_elem)
-{
-    STACK_ASSERT(stk, STK_ASSERT_ERR);
-    ON_DEBUG(STACK_DUMP(stk));
-
-    if ((stk->size <= stk->capacity / 4) && (stk->capacity > START_STACK_SIZE))
-    {
-fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n");
-        StackResize(stk, DECREASE);
-    }
-
-    if (stk->size <= 0)
-    {
-        fprintf(stderr, "SIZE <= 0! \n");
+        fprintf(stderr, "myassertion failed in %s:\t%s:%d\t", func, file, line);
         return STK_ASSERT_ERR;
     }
-
-    *stk_elem = stk->data[stk->size - 1];
-    stk->size--;
-
-    ON_HASH(stk->hash = GetDataHash(stk));
-
-    STACK_ASSERT(stk, STK_ASSERT_ERR);
-    ON_DEBUG(STACK_DUMP(stk));
-    return STK_ASSERT_OK;
 }
 
+int PrintStackErr(int error)
+{   
+    #define PRINT_ERROR(err, code)                      \
+    if (err & code)                                     \
+    {                                                   \
+        fprintf(stderr, #code);                         \
+        fprintf(stderr, " ");                           \
+    }                                                   
+
+    PRINT_ERROR(error, CANARY_ERR);
+    PRINT_ERROR(error, HASH_ERR);
+    PRINT_ERROR(error, STK_PTR_DATA_ERR);
+    PRINT_ERROR(error, STK_DATA_ERR);
+    PRINT_ERROR(error, STK_SIZE_ERR);
+    PRINT_ERROR(error, STK_CAPACITY_ERR);
+
+    #undef PUT_ERROR  
+
+    printf("\n");
+    
+    return 0;  
+}
+
+static int StackOK(Stack_t *stk)
+{
+    #ifdef CANARY_PROTECTION
+    if (stk->left_data_canary_ptr == NULL || stk->right_data_canary_ptr  == NULL \
+            || *stk->left_data_canary_ptr != CANARY_VALUE || *stk->right_data_canary_ptr != CANARY_VALUE)
+        StkError |= CANARY_ERR;
+    #endif
+
+    #ifdef HASH_PROTECTION
+    size_t cur_hash = GetDataHash(stk);
+    if (stk->hash != cur_hash)
+        StkError |= HASH_ERR;
+    #endif
+
+    if (stk == NULL)
+        StkError |= STK_PTR_DATA_ERR;
+
+    if (stk->data == NULL)
+        StkError |= STK_DATA_ERR;
+    
+    if (stk->size < 0 || stk->size > stk->capacity)
+        StkError |= STK_SIZE_ERR;
+
+    if (stk->capacity < 0)
+        StkError |= STK_CAPACITY_ERR;
+
+    return StkError;    
+}
+
+static void StackDump(Stack_t *stk, const char *func_name, const int line)
+{
+    fprintf(stk->logs_file, "STACK:\n");
+    fprintf(stk->logs_file, "called from : func = %s, line = %d\n", func_name, line);
+    fprintf(stk->logs_file, "born in: file = %s, func = %s, line = %d\n", stk->file_born_in, stk->func_born_in, stk->line_born_in);
+    fprintf(stk->logs_file, "size     = %d\n", stk->size);
+    fprintf(stk->logs_file, "capacity = %d\n", stk->capacity);
+
+    #ifdef CANARY_PROTECTION
+    fprintf(stk->logs_file, "left canar : %lld  \t\t\tright:  %lld\n", *stk->left_data_canary_ptr, *stk->right_data_canary_ptr);
+    fprintf(stk->logs_file, "&left canar: %p    &right:       %p \n",  stk->left_data_canary_ptr, stk->right_data_canary_ptr);
+    fprintf(stk->logs_file, "&data[0]   : %p    &data[capa] : %p\n\n", stk->data, stk->data + stk->capacity);
+    #endif
+
+    #ifdef HASH_PROTECTION
+    fprintf(stk->logs_file, "data hash  = %lld\n", stk->hash);
+    #endif
+
+    fprintf(stk->logs_file, "data [%p]: { \n", stk);
+    for (int i = 0; i < stk->size; i++)
+        fprintf(stk->logs_file, "   data[%d] = %d \n", i, stk->data[i]);
+
+    fprintf(stk->logs_file, "}\n\n");
+}
+
+static size_t GetDataHash(Stack_t *stk)
+{
+    size_t hash = 5381;
+
+    for (int i = 0; i < stk->capacity; i++)
+    {
+        hash = hash * 33 + stk->data[i];
+    }
+    
+    hash = hash * 33 +          stk->capacity;
+    hash = hash * 33 + (size_t) stk->data;
+    hash = hash * 33 +  strlen (stk->file_born_in);
+    hash = hash * 33 +  strlen (stk->func_born_in);
+    hash = hash * 33 +          stk->line_born_in;
+    hash = hash * 33 + (size_t) stk->logs_file;
+    hash = hash * 33 + (size_t) stk->left_data_canary_ptr;
+    hash = hash * 33 + (size_t) stk->right_data_canary_ptr;
+    hash = hash * 33 +          stk->size;
+
+    return hash;
+}
