@@ -4,7 +4,7 @@
 #include "stack.h"
 #include "stack_debug_macroses.h"
 
-StkAssertRes StackAssert(Stack_t *stk)
+StkAssertRes StackAssert(Stack_t *stk, const char *file, int line, const char *func)
 {
     StkError = StackOK(stk);
     /*
@@ -17,12 +17,14 @@ StkAssertRes StackAssert(Stack_t *stk)
     */                
     // size_t counter = 1;
 
-    // fprintf(stderr, "");
 
     if (StkError == 0)
         return STK_ASSERT_OK;
     else 
+    {
+        fprintf(stderr, "myassertion failed in %s:\t%s:%d\t", func, file, line);
         return STK_ASSERT_ERR;
+    }
 }
 
 int PrintStackErr(int error)
@@ -122,7 +124,6 @@ void StackDump(Stack_t *stk, const char *func_name, const int line)
     fprintf(stk->logs_file, "}\n\n");
 }
 
-
 size_t GetDataHash(Stack_t *stk)
 {
     size_t hash = 5381;
@@ -131,15 +132,16 @@ size_t GetDataHash(Stack_t *stk)
     {
         hash = hash * 33 + stk->data[i];
     }
-
-    // TODO: hash all fields
+    
+    hash = hash * 33 +          stk->capacity;
+    hash = hash * 33 + (size_t) stk->data;
+    hash = hash * 33 +  strlen (stk->file_born_in);
+    hash = hash * 33 +  strlen (stk->func_born_in);
+    hash = hash * 33 +          stk->line_born_in;
+    hash = hash * 33 + (size_t) stk->logs_file;
+    hash = hash * 33 + (size_t) stk->left_data_canary_ptr;
+    hash = hash * 33 + (size_t) stk->right_data_canary_ptr;
+    hash = hash * 33 +          stk->size;
 
     return hash;
-}
-
-int die()
-{
-    printf("DIE!\n");
-    abort();
-    return 0;
 }

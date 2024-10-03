@@ -71,11 +71,10 @@ StkAssertRes StackPop          (Stack_t *stk, StackElem_t *stk_elem);
 StkAssertRes StackResize       (Stack_t *stk, ResizeValue resize_val);
 StackElem_t *StackDataRecalloc (Stack_t *stk, int new_capacity);
 
-StkAssertRes StackAssert       (Stack_t *stk);
+StkAssertRes StackAssert       (Stack_t *stk, const char *file, int line, const char *func);
 int          StackOK           (Stack_t *stk);
 void         StackDump         (Stack_t *stk, const char *func_name, const int line);
 size_t       GetDataHash       (Stack_t *stk);
 int          PrintStackErr     (int error);
-int die();
 
 #endif

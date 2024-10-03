@@ -12,17 +12,17 @@ StkAssertRes StackCtor(Stack_t *stk)
     stk->size = 0;
     stk->capacity = 0;
 
-    #ifdef CANARY_PROTECTION    
+    ON_CANARY (    
     stk->left_data_canary_ptr  = (canary_t *) ((char *)stk->data - CANARY_SIZE);
     stk->right_data_canary_ptr = (canary_t *) stk->data; 
     *(stk->left_data_canary_ptr)  = CANARY_VALUE;
     *(stk->right_data_canary_ptr) = CANARY_VALUE;
-    #endif
+    )
 
-    #ifdef HASH_PROTECTION
+    ON_HASH (
     stk->hash = GetDataHash(stk);
     fprintf(stderr, "hash = %lld\n", stk->hash);
-    #endif
+    )
 
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
@@ -73,18 +73,19 @@ fprintf(stderr, "nwe_capa = %d, old_capa = %d \n", new_capacity, stk->capacity);
     //STACK_ASSERT(stk, NULL);
     //ON_DEBUG(STACK_DUMP(stk));
     size_t new_byte_capa = new_capacity * sizeof(StackElem_t);
-    size_t residual = (CANARY_SIZE == 0) ? 0 : (CANARY_SIZE - new_byte_capa % CANARY_SIZE) % CANARY_SIZE; //TODO: ON_CANARY
+    // size_t residual = (CANARY_SIZE == 0) ? 0 : (CANARY_SIZE - new_byte_capa % CANARY_SIZE) % CANARY_SIZE;
+    ON_CANARY( size_t residual = (CANARY_SIZE - new_byte_capa % CANARY_SIZE) % CANARY_SIZE );
 
-    size_t new_data_bytesize = new_byte_capa + 2 * CANARY_SIZE + residual; //TODO: ON_CANARY
+    size_t new_data_bytesize = new_byte_capa  ON_CANARY(+ 2 * CANARY_SIZE + residual);
 fprintf(stderr, "new_byte_capa = %lld; residual = %lld; new_data_bytesize = %lld\n", new_byte_capa, residual, new_data_bytesize);
 
     // stk->data = (StackElem_t *) realloc((char *)stk->data - CANARY_SIZE, new_data_bytesize);
-    char * tmp_ptr = (char *) realloc((char *)stk->data - CANARY_SIZE, new_data_bytesize); //TODO: ON_CANARY
-    stk->data = (StackElem_t *) (tmp_ptr + CANARY_SIZE); //TODO: ON_CANARY
+    char * tmp_ptr = (char *) realloc((char *)stk->data  ON_CANARY( - CANARY_SIZE ), new_data_bytesize);
+    stk->data = (StackElem_t *) (tmp_ptr ON_CANARY(+ CANARY_SIZE));
 
     #ifdef CANARY_PROTECTION
-    stk->left_data_canary_ptr  = (canary_t*) ((char *)stk->data - CANARY_SIZE);
-    stk->right_data_canary_ptr = (canary_t*) ((char *)stk->data + new_byte_capa + residual);
+    stk->left_data_canary_ptr  = (canary_t*) ((char *)stk->data ON_CANARY(- CANARY_SIZE));
+    stk->right_data_canary_ptr = (canary_t*) ((char *)stk->data + new_byte_capa ON_CANARY(+ residual));
 
     *(stk->left_data_canary_ptr)  = CANARY_VALUE; 
     *(stk->right_data_canary_ptr) = CANARY_VALUE;
@@ -139,12 +140,15 @@ StkAssertRes StackPop(Stack_t *stk, StackElem_t *stk_elem)
 
     if ((stk->size <= stk->capacity / 4) && (stk->capacity > START_STACK_SIZE))
     {
+        if (stk->size <= 0)
+            fprintf(stderr, "SIZE <= 0! \n");
+
 fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n");
+
         StackResize(stk, DECREASE);
+        *stk_elem = stk->data[stk->size - 1];
+        stk->size--;
     }
-                                            // TODO: check size in pop
-    *stk_elem = stk->data[stk->size - 1];
-    stk->size--;
 
     ON_HASH(stk->hash = GetDataHash(stk));
 
