@@ -4,37 +4,42 @@
 #include "stack.h"
 #include "stack_debug_macroses.h"
 
-StkAssertRes StackInit(Stack_t *stk)
+StkAssertRes StackCtor(Stack_t *stk)
 {
-    StackElem_t *whole_data = (StackElem_t *) calloc(2, CANARY_SIZE);
+    StackElem_t *whole_data = (StackElem_t *) calloc(2, CANARY_SIZE); //TODO: ON_CANARY 
     stk->data = (StackElem_t *) ((char *) whole_data + CANARY_SIZE);
     
-    #ifdef DEBUG    
+    stk->size = 0;
+    stk->capacity = 0;
+
+    #ifdef CANARY_PROTECTION    
     stk->left_data_canary_ptr  = (canary_t *) ((char *)stk->data - CANARY_SIZE);
     stk->right_data_canary_ptr = (canary_t *) stk->data; 
     *(stk->left_data_canary_ptr)  = CANARY_VALUE;
     *(stk->right_data_canary_ptr) = CANARY_VALUE;
     #endif
 
-    stk->size = 0;
-    stk->capacity = 0;
+    #ifdef HASH_PROTECTION
+    stk->hash = GetDataHash(stk);
+    fprintf(stderr, "hash = %lld\n", stk->hash);
+    #endif
 
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
     return STK_ASSERT_OK;
 }
 
-StkAssertRes StackDestruct(Stack_t *stk)
+StkAssertRes StackDtor(Stack_t *stk)
 {
-    STACK_ASSERT(stk, STK_ASSERT_ERR);
-    ON_DEBUG(STACK_DUMP(stk));
-
-    ON_DEBUG(fclose(stk->logs_file));
-
     free((char *)stk->data - CANARY_SIZE);
     stk->data = NULL;
     stk->capacity = 0;
     stk->size = 0;
+
+    ON_DEBUG(fclose(stk->logs_file));
+
+    ON_DEBUG(STACK_DUMP(stk));
+
     return STK_ASSERT_OK;
 }
 
@@ -46,7 +51,6 @@ StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
     if (stk->capacity == 0)
     {
         stk->data = (StackElem_t *) StackDataRecalloc(stk, START_STACK_SIZE);
-        stk->capacity = START_STACK_SIZE;
         STACK_ASSERT(stk, STK_ASSERT_ERR);
         return STK_ASSERT_OK;
     }
@@ -62,21 +66,21 @@ StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
 
 StackElem_t *StackDataRecalloc(Stack_t *stk, int new_capacity)
 {
-    fprintf(stderr,         "\nRECALLOC!\n");
-    fprintf(stderr, "nwe_capa = %d, old_capa = %d \n", new_capacity, stk->capacity);
+fprintf(stderr,         "\nRECALLOC!\n");
+fprintf(stderr, "nwe_capa = %d, old_capa = %d \n", new_capacity, stk->capacity);
     ON_DEBUG(fprintf(stk->logs_file, "\nRECALLOC!\n"));
 
     //STACK_ASSERT(stk, NULL);
     //ON_DEBUG(STACK_DUMP(stk));
     size_t new_byte_capa = new_capacity * sizeof(StackElem_t);
-    size_t residual = (CANARY_SIZE == 0) ? 0 : (CANARY_SIZE - new_byte_capa % CANARY_SIZE) % CANARY_SIZE;
+    size_t residual = (CANARY_SIZE == 0) ? 0 : (CANARY_SIZE - new_byte_capa % CANARY_SIZE) % CANARY_SIZE; //TODO: ON_CANARY
 
-    size_t new_data_bytesize = new_byte_capa + 2 * CANARY_SIZE + residual;
+    size_t new_data_bytesize = new_byte_capa + 2 * CANARY_SIZE + residual; //TODO: ON_CANARY
 fprintf(stderr, "new_byte_capa = %lld; residual = %lld; new_data_bytesize = %lld\n", new_byte_capa, residual, new_data_bytesize);
 
     // stk->data = (StackElem_t *) realloc((char *)stk->data - CANARY_SIZE, new_data_bytesize);
-    char * tmp_ptr = (char *) realloc((char *)stk->data - CANARY_SIZE, new_data_bytesize);
-    stk->data = (StackElem_t *) (tmp_ptr + CANARY_SIZE);
+    char * tmp_ptr = (char *) realloc((char *)stk->data - CANARY_SIZE, new_data_bytesize); //TODO: ON_CANARY
+    stk->data = (StackElem_t *) (tmp_ptr + CANARY_SIZE); //TODO: ON_CANARY
 
     #ifdef CANARY_PROTECTION
     stk->left_data_canary_ptr  = (canary_t*) ((char *)stk->data - CANARY_SIZE);
@@ -89,7 +93,11 @@ fprintf(stderr, "new_byte_capa = %lld; residual = %lld; new_data_bytesize = %lld
     if (new_capacity > stk->capacity)
         memset(stk->data + stk->capacity, 0, new_byte_capa + residual - stk->capacity * sizeof(StackElem_t));
 
-    stk->capacity = (int) new_capacity;
+    stk->capacity = new_capacity;
+
+    ON_HASH(stk->hash = GetDataHash(stk));
+
+fprintf(stderr, "hash = %lld\n", stk->hash);
 
 fprintf(stderr, "left canar : %lld  right :       %lld\n", *stk->left_data_canary_ptr, *stk->right_data_canary_ptr);
 fprintf(stderr, "&left canar: %p    &right:       %p\n",    stk->left_data_canary_ptr, stk->right_data_canary_ptr);
@@ -117,6 +125,8 @@ StkAssertRes StackPush(Stack_t *stk, StackElem_t value)
     // *DATA_EL_PTR(stk->data, stk->size) = value;
     stk->size++;
 
+    ON_HASH(stk->hash = GetDataHash(stk));
+
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
     return STK_ASSERT_OK;  
@@ -132,95 +142,13 @@ StkAssertRes StackPop(Stack_t *stk, StackElem_t *stk_elem)
 fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n");
         StackResize(stk, DECREASE);
     }
-
+                                            // TODO: check size in pop
     *stk_elem = stk->data[stk->size - 1];
     stk->size--;
+
+    ON_HASH(stk->hash = GetDataHash(stk));
 
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
     return STK_ASSERT_OK;
 }
-
-void StackDump(Stack_t *stk, const char *func_name, const int line)
-{
-    StkError stk_condition = StackOK(stk);
-
-    fprintf(stk->logs_file, "STACK:\n");
-    fprintf(stk->logs_file, "called from : func = %s, line = %d\n", func_name, line);
-    fprintf(stk->logs_file, "born in: file = %s, func = %s, line = %d\n", stk->file_born_in, stk->func_born_in, stk->line_born_in);
-    fprintf(stk->logs_file, "size     = %d\n", stk->size);
-    fprintf(stk->logs_file, "capacity = %d\n", stk->capacity);
-
-    #ifdef CANARY_PROTECTION
-    fprintf(stk->logs_file, "left canar : %lld  \t\t\tright:  %lld\n", *stk->left_data_canary_ptr, *stk->right_data_canary_ptr);
-    fprintf(stk->logs_file, "&left canar: %p    &right:       %p \n",  stk->left_data_canary_ptr, stk->right_data_canary_ptr);
-    fprintf(stk->logs_file, "&data[0]   : %p    &data[capa] : %p\n\n", stk->data, stk->data + stk->capacity);
-    #endif
-
-    fprintf(stk->logs_file, "data [%p]: { \n", stk);
-    if (stk_condition != STK_PTR_DATA_ERR && stk_condition != STK_DATA_ERR && stk_condition != STK_SIZE_ERR)
-        for (int i = 0; i < stk->size; i++)
-            fprintf(stk->logs_file, "   data[%d] = %d \n", i, stk->data[i]);
-
-    fprintf(stk->logs_file, "}\n\n");
-}
-
-StkError StackOK(Stack_t *stk)
-{
-    #ifdef CANARY_PROTECTION
-    if (*stk->left_data_canary_ptr != CANARY_VALUE || *stk->right_data_canary_ptr != CANARY_VALUE \
-            || stk->left_data_canary_ptr == NULL || stk->right_data_canary_ptr  == NULL)
-        return CANARY_ERR;
-    #endif
-
-    if (stk == NULL)
-        return STK_PTR_DATA_ERR;
-
-    if (stk->data == NULL)
-        return STK_DATA_ERR;
-    
-    if (stk->size < 0 || stk->size > stk->capacity)
-        return STK_SIZE_ERR;
-
-    if (stk->capacity < 0)
-        return STK_CAPACITY_ERR;
-
-    return STK_OK;    
-}
-
-const char *StackStrErr(StkError err)
-{
-    #define DESCR_(err)                         \
-        case err: return #err; break;
-
-    switch (err)
-    {
-    DESCR_(STK_OK);
-    DESCR_(CANARY_ERR);
-    DESCR_(STK_PTR_DATA_ERR);
-    DESCR_(STK_DATA_ERR);
-    DESCR_(STK_SIZE_ERR);
-    DESCR_(STK_CAPACITY_ERR);
-    
-    default:
-        break;
-    }
-
-    return NULL;
-
-    #undef DESCR_
-}
-
-StkAssertRes StackAssert(Stack_t *stk)
-{
-    StkError condition = StackOK(stk);                
-    if (condition != STK_OK)                          
-    {                                                 
-        fprintf(stderr,         "\n !!! %s in ", StackStrErr(condition));
-        fprintf(stk->logs_file, "\n !!! %s in ", StackStrErr(condition));
-        return STK_ASSERT_ERR;                               
-    } 
-
-    return STK_ASSERT_OK;
-}
-

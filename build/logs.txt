@@ -1,0 +1,154 @@
+STACK:
+called from : func = StackCtor, line = 28
+born in: file = src/main.cpp, func = main, line = 14
+size     = 0
+capacity = 0
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1448 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1448
+
+data hash  = 5381
+data [000000cba5dff900]: { 
+}
+
+STACK:
+called from : func = StackPush, line = 116
+born in: file = src/main.cpp, func = main, line = 14
+size     = 0
+capacity = 0
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1448 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1448
+
+data hash  = 5381
+data [000000cba5dff900]: { 
+}
+
+STACK:
+called from : func = StackResize, line = 49
+born in: file = src/main.cpp, func = main, line = 14
+size     = 0
+capacity = 0
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1448 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1448
+
+data hash  = 5381
+data [000000cba5dff900]: { 
+}
+
+
+RECALLOC!
+STACK:
+called from : func = StackDataRecalloc, line = 108
+born in: file = src/main.cpp, func = main, line = 14
+size     = 0
+capacity = 2
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1450 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1450
+
+data hash  = 5859909
+data [000000cba5dff900]: { 
+}
+
+STACK:
+called from : func = StackPush, line = 131
+born in: file = src/main.cpp, func = main, line = 14
+size     = 1
+capacity = 2
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1450 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1450
+
+data hash  = 5860239
+data [000000cba5dff900]: { 
+   data[0] = 10 
+}
+
+STACK:
+called from : func = StackPush, line = 116
+born in: file = src/main.cpp, func = main, line = 14
+size     = 1
+capacity = 2
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1450 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1450
+
+data hash  = 5860239
+data [000000cba5dff900]: { 
+   data[0] = 10 
+}
+
+STACK:
+called from : func = StackPush, line = 131
+born in: file = src/main.cpp, func = main, line = 14
+size     = 2
+capacity = 2
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1450 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1450
+
+data hash  = 5860254
+data [000000cba5dff900]: { 
+   data[0] = 10 
+   data[1] = 15 
+}
+
+STACK:
+called from : func = StackPush, line = 116
+born in: file = src/main.cpp, func = main, line = 14
+size     = 2
+capacity = 2
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1450 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1450
+
+data hash  = 5860254
+data [000000cba5dff900]: { 
+   data[0] = 10 
+   data[1] = 15 
+}
+
+STACK:
+called from : func = StackResize, line = 49
+born in: file = src/main.cpp, func = main, line = 14
+size     = 2
+capacity = 2
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1450 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1450
+
+data hash  = 5860254
+data [000000cba5dff900]: { 
+   data[0] = 10 
+   data[1] = 15 
+}
+
+
+RECALLOC!
+STACK:
+called from : func = StackDataRecalloc, line = 108
+born in: file = src/main.cpp, func = main, line = 14
+size     = 2
+capacity = 4
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1458 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1458
+
+data hash  = 6381816606
+data [000000cba5dff900]: { 
+   data[0] = 10 
+   data[1] = 15 
+}
+
+STACK:
+called from : func = StackResize, line = 62
+born in: file = src/main.cpp, func = main, line = 14
+size     = 2
+capacity = 4
+left canar : 3735928559  			right:  3735928559
+&left canar: 0000020a74bd1440    &right:       0000020a74bd1458 
+&data[0]   : 0000020a74bd1448    &data[capa] : 0000020a74bd1458
+
+data h
