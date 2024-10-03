@@ -9,11 +9,12 @@
 #define CANARY_PROTECTION
 #define HASH_PROTECTION
 
-extern int StkError;
+#include "stack_debug.h"
 
 typedef int StackElem_t;
 
-#include "stack_debug.h"
+typedef size_t StackID;
+extern int StkError;
 
 enum ResizeValue
 {
@@ -24,9 +25,8 @@ enum ResizeValue
 struct Stack_t
 {
     #ifdef DEBUG
-    const int line_born_in;
+    int line_born_in;
     const char *file_born_in;
-    const char *func_born_in;
     FILE *logs_file;
     #endif
 
@@ -46,10 +46,12 @@ struct Stack_t
 
 const StackElem_t START_STACK_SIZE = 2;
 
-StkAssertRes StackCtor (Stack_t *stk);
-StkAssertRes StackDtor (Stack_t *stk);
-StkAssertRes StackPush (Stack_t *stk, StackElem_t value);
-StkAssertRes StackPop  (Stack_t *stk, StackElem_t *stk_elem);
+StkAssertRes StackCtor (StackID *code, const char* file, const int line);
+StkAssertRes StackDtor (StackID code);
+StkAssertRes StackPush (StackID code, StackElem_t value);
+StkAssertRes StackPop  (StackID code, StackElem_t *stk_elem);
+int PrintStackErr (int error);
 
-int          PrintStackErr (int error);
+#define STACK_CTOR(code) StackCtor(code, __FILE__, __LINE__)
+
 #endif

@@ -12,27 +12,26 @@ int main()
 {
     fprintf(stderr, "\n START \n");
     
-    Stack_t stack = {INIT_DEBUG_STKVARS};
+    StackID stk_id = 0; 
+    // Stack_t stack = {INIT_DEBUG_STKVARS};
     
-    StackCtor(&stack)      verified;
-    StackPush(&stack, 10)  verified;
-    StackPush(&stack, 15)  verified;
-    StackPush(&stack, 20)  verified;
-    StackPush(&stack, 300) verified;
-    StackPush(&stack, 80)  verified;
+    STACK_CTOR(&stk_id)    verified;
+    StackPush(stk_id, 10)  verified;
+    StackPush(stk_id, 15)  verified;
+    StackPush(stk_id, 20)  verified;
+    StackPush(stk_id, 300) verified;
+    StackPush(stk_id, 80)  verified;
 
-    // stack.capacity = -8;
-    // stack.hash = 9887786;
-// 
-    // for (int i = 0; i < 10; i++)
-        // stack.data[stack.capacity + i] = 0;
+    // size_t *ptr;
+    // for (int i = 0; i < 1000; i++)
+        // ptr[i] = 0;
 
     StackElem_t el = 0;
-    StackPop(&stack, &el) verified;
-    StackPop(&stack, &el) verified;
-    StackPop(&stack, &el) verified;
-    
-    StackDtor(&stack);
+    StackPop(stk_id, &el) verified;
+    StackPop(stk_id, &el) verified;
+    StackPop(stk_id, &el) verified;
+
+    StackDtor(stk_id);
 
     fprintf(stderr, "\n END \n"); 
 }

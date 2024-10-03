@@ -4,17 +4,29 @@
 #include "stack.h"
 #include "stack_debug.h"
 
+static int STK_ENCODE_KEY = 0xDEADBEAF;
+
 static StkAssertRes StackResize       (Stack_t *stk, ResizeValue resize_val);
 static StackElem_t *StackDataRecalloc (Stack_t *stk, int new_capacity);
 
-static StkAssertRes StackAssert   (Stack_t *stk, const char *file, int line, const char *func);
+static StkAssertRes StackAssert   (Stack_t *stk, const char *file, int line);
 static int          StackOK       (Stack_t *stk);
-static void         StackDump     (Stack_t *stk, const char *func_name, const int line);
+static void         StackDump     (Stack_t *stk, const char *file, const int line);
 static size_t       GetDataHash   (Stack_t *stk);
 
+static StackID  StackEncode(Stack_t *stk);
+static Stack_t *StackDecode(StackID code);
 
-StkAssertRes StackCtor(Stack_t *stk)
+StkAssertRes StackCtor (StackID *code, const char* file, const int line)
 {
+    Stack_t *stk = (Stack_t *) calloc(1, sizeof(Stack_t));
+
+    ON_DEBUG (                                                                                  \
+        stk->file_born_in = file ,                                                              \
+        stk->line_born_in = line,                                                               \
+        stk->logs_file = fopen("logs.txt", "w")                                                 \
+    );
+
     StackElem_t *whole_data = (StackElem_t *) calloc(2, CANARY_SIZE);
     stk->data = (StackElem_t *) ((char *) whole_data + CANARY_SIZE);
     
@@ -35,11 +47,16 @@ StkAssertRes StackCtor(Stack_t *stk)
 
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
+
+    *code = StackEncode(stk);
+
     return STK_ASSERT_OK;
 }
 
-StkAssertRes StackDtor(Stack_t *stk)
+StkAssertRes StackDtor(StackID code)
 {
+    Stack_t *stk = StackDecode(code);
+
     free((char *)stk->data - CANARY_SIZE);
     stk->data = NULL;
     stk->capacity = 0;
@@ -49,11 +66,15 @@ StkAssertRes StackDtor(Stack_t *stk)
 
     ON_DEBUG(STACK_DUMP(stk));
 
+    free(stk);
+
     return STK_ASSERT_OK;
 }
 
-StkAssertRes StackPush(Stack_t *stk, StackElem_t value)
+StkAssertRes StackPush(StackID code, StackElem_t value)
 {
+    Stack_t *stk = StackDecode(code);
+
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
 
@@ -72,8 +93,10 @@ StkAssertRes StackPush(Stack_t *stk, StackElem_t value)
     return STK_ASSERT_OK;  
 }
 
-StkAssertRes StackPop(Stack_t *stk, StackElem_t *stk_elem)
-{
+StkAssertRes StackPop(StackID code, StackElem_t *stk_elem)
+{    
+    Stack_t *stk = StackDecode(code);
+
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
 
@@ -97,6 +120,16 @@ fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n");
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
     return STK_ASSERT_OK;
+}
+
+static StackID StackEncode(Stack_t *stk)
+{
+    return (StackID)stk ^ STK_ENCODE_KEY;   
+}
+
+static Stack_t *StackDecode(StackID code)
+{
+    return (Stack_t *)(code ^ STK_ENCODE_KEY);
 }
 
 static StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
@@ -164,7 +197,7 @@ fprintf(stderr, "&data[0]   : %p    &data[capa] : %p\n\n", &stk->data[0], stk->d
     return stk->data;
 }
 
-static StkAssertRes StackAssert(Stack_t *stk, const char *file, int line, const char *func)
+static StkAssertRes StackAssert(Stack_t *stk, const char *file, int line)
 {
     StkError = StackOK(stk);
 
@@ -172,7 +205,7 @@ static StkAssertRes StackAssert(Stack_t *stk, const char *file, int line, const 
         return STK_ASSERT_OK;
     else 
     {
-        fprintf(stderr, "myassertion failed in %s:\t%s:%d\t", func, file, line);
+        fprintf(stderr, "myassertion failed in\t%s:%d\t", file, line);
         return STK_ASSERT_ERR;
     }
 }
@@ -229,28 +262,28 @@ static int StackOK(Stack_t *stk)
     return StkError;    
 }
 
-static void StackDump(Stack_t *stk, const char *func_name, const int line)
+static void StackDump(Stack_t *stk, const char *file, const int line)
 {
-    fprintf(stk->logs_file, "STACK:\n");
-    fprintf(stk->logs_file, "called from : func = %s, line = %d\n", func_name, line);
-    fprintf(stk->logs_file, "born in: file = %s, func = %s, line = %d\n", stk->file_born_in, stk->func_born_in, stk->line_born_in);
-    fprintf(stk->logs_file, "size     = %d\n", stk->size);
-    fprintf(stk->logs_file, "capacity = %d\n", stk->capacity);
+    fprintf(stk->logs_file, "Stack_t[%p] at %s:%d born at %s:%d:\n", stk, file, line, stk->file_born_in, stk->line_born_in);
+    fprintf(stk->logs_file, "{\n");
+    fprintf(stk->logs_file, "\tsize     = %d\n", stk->size);
+    fprintf(stk->logs_file, "\tcapacity = %d\n\n", stk->capacity);
 
     #ifdef CANARY_PROTECTION
-    fprintf(stk->logs_file, "left canar : %lld  \t\t\tright:  %lld\n", *stk->left_data_canary_ptr, *stk->right_data_canary_ptr);
-    fprintf(stk->logs_file, "&left canar: %p    &right:       %p \n",  stk->left_data_canary_ptr, stk->right_data_canary_ptr);
-    fprintf(stk->logs_file, "&data[0]   : %p    &data[capa] : %p\n\n", stk->data, stk->data + stk->capacity);
+    fprintf(stk->logs_file, "\tleft canar : %lld\t\t\tright canar:  %lld\n", *stk->left_data_canary_ptr, *stk->right_data_canary_ptr);
+    fprintf(stk->logs_file, "\t&left canar: %p\t&right:       %p \n",  stk->left_data_canary_ptr, stk->right_data_canary_ptr);
+    fprintf(stk->logs_file, "\t&data[0]   : %p\t&data[capa] : %p\n\n", stk->data, stk->data + stk->capacity);
     #endif
 
     #ifdef HASH_PROTECTION
-    fprintf(stk->logs_file, "data hash  = %lld\n", stk->hash);
+    fprintf(stk->logs_file, "\tdata hash  = %lld\n\n", stk->hash);
     #endif
 
-    fprintf(stk->logs_file, "data [%p]: { \n", stk);
+    fprintf(stk->logs_file, "\tdata [%p]: { \n", stk);
     for (int i = 0; i < stk->size; i++)
-        fprintf(stk->logs_file, "   data[%d] = %d \n", i, stk->data[i]);
+        fprintf(stk->logs_file, "\t\tdata[%d] = %d \n", i, stk->data[i]);
 
+    fprintf(stk->logs_file, "\t}\n");
     fprintf(stk->logs_file, "}\n\n");
 }
 
@@ -266,7 +299,6 @@ static size_t GetDataHash(Stack_t *stk)
     hash = hash * 33 +          stk->capacity;
     hash = hash * 33 + (size_t) stk->data;
     hash = hash * 33 +  strlen (stk->file_born_in);
-    hash = hash * 33 +  strlen (stk->func_born_in);
     hash = hash * 33 +          stk->line_born_in;
     hash = hash * 33 + (size_t) stk->logs_file;
     hash = hash * 33 + (size_t) stk->left_data_canary_ptr;

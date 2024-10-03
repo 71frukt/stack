@@ -22,7 +22,7 @@ enum StkErrorEnum
 };
 
 
-#define STACK_DUMP(stk)  StackDump(stk, __func__, __LINE__)
+#define STACK_DUMP(stk)  StackDump(stk, __FILE__, __LINE__)
 
 
 #ifdef DEBUG
@@ -38,7 +38,7 @@ enum StkErrorEnum
     .logs_file = fopen("logs.txt", "w")                                                     \
 
 #define STACK_ASSERT(stk, returned_error)                                                   \
-    if (StackAssert(stk, __FILE__, __LINE__, __func__) == STK_ASSERT_ERR)                   \
+    if (StackAssert(stk, __FILE__, __LINE__) == STK_ASSERT_ERR)                   \
     {                                                                                       \
         STACK_DUMP(stk);                                                                    \
         return returned_error;                                                              \
