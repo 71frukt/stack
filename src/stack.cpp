@@ -9,13 +9,14 @@ static int STK_ENCODE_KEY = 0xDEADBEAF;
 static StkAssertRes StackResize       (Stack_t *stk, ResizeValue resize_val);
 static StackElem_t *StackDataRecalloc (Stack_t *stk, int new_capacity);
 
-static StkAssertRes StackAssert   (Stack_t *stk, const char *file, int line);
-static int          StackOK       (Stack_t *stk);
-static void         StackDump     (Stack_t *stk, const char *file, const int line);
-static size_t       GetDataHash   (Stack_t *stk);
+static StkAssertRes StackAssert (Stack_t *stk, const char *file, const int line);
+static void         StackDump   (Stack_t *stk, const char *file, const int line);
+static int          StackOK     (Stack_t *stk);
+static size_t       GetDataHash (Stack_t *stk);
 
-static StackID  StackEncode(Stack_t *stk);
-static Stack_t *StackDecode(StackID code);
+static StackID  StackEncode (Stack_t *stk);
+static Stack_t *StackDecode (StackID code);
+
 
 StkAssertRes StackCtor (StackID *code, const char* file, const int line)
 {
@@ -34,15 +35,14 @@ StkAssertRes StackCtor (StackID *code, const char* file, const int line)
     stk->capacity = 0;
 
     ON_CANARY (    
-    stk->left_data_canary_ptr  = (canary_t *) ((char *)stk->data - CANARY_SIZE);
-    stk->right_data_canary_ptr = (canary_t *) stk->data; 
-    *(stk->left_data_canary_ptr)  = CANARY_VALUE;
-    *(stk->right_data_canary_ptr) = CANARY_VALUE;
+        stk->left_data_canary_ptr  = (canary_t *) ((char *)stk->data - CANARY_SIZE);
+        stk->right_data_canary_ptr = (canary_t *) stk->data; 
+        *(stk->left_data_canary_ptr)  = CANARY_VALUE;
+        *(stk->right_data_canary_ptr) = CANARY_VALUE;
     )
 
     ON_HASH (
-    stk->hash = GetDataHash(stk);
-    fprintf(stderr, "hash = %lld\n", stk->hash);
+        stk->hash = GetDataHash(stk);
     )
 
     STACK_ASSERT(stk, STK_ASSERT_ERR);
@@ -102,7 +102,7 @@ StkAssertRes StackPop(StackID code, StackElem_t *stk_elem)
 
     if ((stk->size <= stk->capacity / 4) && (stk->capacity > START_STACK_SIZE))
     {
-fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n");
+        ON_DEBUG(fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n"));
         StackResize(stk, DECREASE);
     }
 
@@ -155,15 +155,12 @@ static StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
 
 static StackElem_t *StackDataRecalloc(Stack_t *stk, int new_capacity)
 {
-fprintf(stderr,         "\nRECALLOC!\n");
-fprintf(stderr, "nwe_capa = %d, old_capa = %d \n", new_capacity, stk->capacity);
     ON_DEBUG(fprintf(stk->logs_file, "\nRECALLOC!\n"));
 
     size_t new_byte_capa = new_capacity * sizeof(StackElem_t);
     ON_CANARY( size_t residual = (CANARY_SIZE - new_byte_capa % CANARY_SIZE) % CANARY_SIZE );
 
     size_t new_data_bytesize = new_byte_capa  ON_CANARY(+ 2 * CANARY_SIZE + residual);
-fprintf(stderr, "new_byte_capa = %lld; residual = %lld; new_data_bytesize = %lld\n", new_byte_capa, residual, new_data_bytesize);
 
     // stk->data = (StackElem_t *) realloc((char *)stk->data - CANARY_SIZE, new_data_bytesize);
     char * tmp_ptr = (char *) realloc((char *)stk->data  ON_CANARY( - CANARY_SIZE ), new_data_bytesize);
@@ -178,18 +175,11 @@ fprintf(stderr, "new_byte_capa = %lld; residual = %lld; new_data_bytesize = %lld
     #endif
 
     if (new_capacity > stk->capacity)
-        memset(stk->data + stk->capacity, 0, new_byte_capa + residual - stk->capacity * sizeof(StackElem_t));
+        memset(stk->data + stk->capacity, 0, new_byte_capa ON_CANARY(+ residual) - stk->capacity * sizeof(StackElem_t));
 
     stk->capacity = new_capacity;
 
     ON_HASH(stk->hash = GetDataHash(stk));
-
-fprintf(stderr, "hash = %lld\n", stk->hash);
-
-fprintf(stderr, "left canar : %lld  right :       %lld\n", *stk->left_data_canary_ptr, *stk->right_data_canary_ptr);
-fprintf(stderr, "&left canar: %p    &right:       %p\n",    stk->left_data_canary_ptr, stk->right_data_canary_ptr);
-fprintf(stderr, "data[0]    : %d    data[capa]  : %d\n",   *stk->data, *stk->data + stk->capacity);
-fprintf(stderr, "&data[0]   : %p    &data[capa] : %p\n\n", &stk->data[0], stk->data + stk->capacity);
 
     STACK_ASSERT(stk, NULL);
     ON_DEBUG(STACK_DUMP(stk));
@@ -197,7 +187,7 @@ fprintf(stderr, "&data[0]   : %p    &data[capa] : %p\n\n", &stk->data[0], stk->d
     return stk->data;
 }
 
-static StkAssertRes StackAssert(Stack_t *stk, const char *file, int line)
+static StkAssertRes StackAssert(Stack_t *stk, const char *file, const int line)
 {
     StkError = StackOK(stk);
 
@@ -264,6 +254,7 @@ static int StackOK(Stack_t *stk)
 
 static void StackDump(Stack_t *stk, const char *file, const int line)
 {
+    ON_DEBUG (
     fprintf(stk->logs_file, "Stack_t[%p] at %s:%d born at %s:%d:\n", stk, file, line, stk->file_born_in, stk->line_born_in);
     fprintf(stk->logs_file, "{\n");
     fprintf(stk->logs_file, "\tsize     = %d\n", stk->size);
@@ -285,6 +276,8 @@ static void StackDump(Stack_t *stk, const char *file, const int line)
 
     fprintf(stk->logs_file, "\t}\n");
     fprintf(stk->logs_file, "}\n\n");
+
+    );
 }
 
 static size_t GetDataHash(Stack_t *stk)
@@ -298,11 +291,17 @@ static size_t GetDataHash(Stack_t *stk)
     
     hash = hash * 33 +          stk->capacity;
     hash = hash * 33 + (size_t) stk->data;
-    hash = hash * 33 +  strlen (stk->file_born_in);
-    hash = hash * 33 +          stk->line_born_in;
-    hash = hash * 33 + (size_t) stk->logs_file;
-    hash = hash * 33 + (size_t) stk->left_data_canary_ptr;
-    hash = hash * 33 + (size_t) stk->right_data_canary_ptr;
+    ON_DEBUG (
+        hash = hash * 33 +  strlen (stk->file_born_in);
+        hash = hash * 33 +          stk->line_born_in;
+        hash = hash * 33 + (size_t) stk->logs_file;
+    );
+
+    ON_CANARY (
+        hash = hash * 33 + (size_t) stk->left_data_canary_ptr;
+        hash = hash * 33 + (size_t) stk->right_data_canary_ptr;
+    );
+
     hash = hash * 33 +          stk->size;
 
     return hash;

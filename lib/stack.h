@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <stdint.h>
 
 #define DEBUG
 #define CANARY_PROTECTION
@@ -13,7 +14,7 @@
 
 typedef int StackElem_t;
 
-typedef size_t StackID;
+typedef int64_t StackID;
 extern int StkError;
 
 enum ResizeValue

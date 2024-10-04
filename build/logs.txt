@@ -1,395 +1,445 @@
-STACK:
-called from : func = StackCtor, line = 28
-born in: file = src/main.cpp, func = main, line = 15
-size     = 0
-capacity = 0
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1448 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1448
+Stack_t[0000020fbbe213e0] at src/stack.cpp:49 born at src/main.cpp:18:
+{
+	size     = 0
+	capacity = 0
 
-data hash  = -7530110517611795676
-data [000000ec0cbff770]: { 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe21498 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe21498
+
+	data hash  = -724396530710449677
+
+	data [0000020fbbe213e0]: { 
+	}
 }
 
-STACK:
-called from : func = StackPush, line = 117
-born in: file = src/main.cpp, func = main, line = 15
-size     = 0
-capacity = 0
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1448 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1448
+Stack_t[0000020fbbe213e0] at src/stack.cpp:79 born at src/main.cpp:18:
+{
+	size     = 0
+	capacity = 0
 
-data hash  = -7530110517611795676
-data [000000ec0cbff770]: { 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe21498 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe21498
+
+	data hash  = -724396530710449677
+
+	data [0000020fbbe213e0]: { 
+	}
 }
 
-STACK:
-called from : func = StackResize, line = 49
-born in: file = src/main.cpp, func = main, line = 15
-size     = 0
-capacity = 0
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1448 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1448
+Stack_t[0000020fbbe213e0] at src/stack.cpp:138 born at src/main.cpp:18:
+{
+	size     = 0
+	capacity = 0
 
-data hash  = -7530110517611795676
-data [000000ec0cbff770]: { 
-}
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe21498 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe21498
 
+	data hash  = -724396530710449677
 
-RECALLOC!
-STACK:
-called from : func = StackDataRecalloc, line = 109
-born in: file = src/main.cpp, func = main, line = 15
-size     = 0
-capacity = 2
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1450 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1450
-
-data hash  = 5932810216068811630
-data [000000ec0cbff770]: { 
-}
-
-STACK:
-called from : func = StackPush, line = 132
-born in: file = src/main.cpp, func = main, line = 15
-size     = 1
-capacity = 2
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1450 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1450
-
-data hash  = 5948126005921456121
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-}
-
-STACK:
-called from : func = StackPush, line = 117
-born in: file = src/main.cpp, func = main, line = 15
-size     = 1
-capacity = 2
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1450 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1450
-
-data hash  = 5948126005921456121
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-}
-
-STACK:
-called from : func = StackPush, line = 132
-born in: file = src/main.cpp, func = main, line = 15
-size     = 2
-capacity = 2
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1450 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1450
-
-data hash  = 5948822178187485417
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-}
-
-STACK:
-called from : func = StackPush, line = 117
-born in: file = src/main.cpp, func = main, line = 15
-size     = 2
-capacity = 2
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1450 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1450
-
-data hash  = 5948822178187485417
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-}
-
-STACK:
-called from : func = StackResize, line = 49
-born in: file = src/main.cpp, func = main, line = 15
-size     = 2
-capacity = 2
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1450 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1450
-
-data hash  = 5948822178187485417
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
+	data [0000020fbbe213e0]: { 
+	}
 }
 
 
 RECALLOC!
-STACK:
-called from : func = StackDataRecalloc, line = 109
-born in: file = src/main.cpp, func = main, line = 15
-size     = 2
-capacity = 4
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1458 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1458
+Stack_t[0000020fbbe213e0] at src/stack.cpp:185 born at src/main.cpp:18:
+{
+	size     = 0
+	capacity = 2
 
-data hash  = 879172923529253747
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a0 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a0
+
+	data hash  = 7509462189459681789
+
+	data [0000020fbbe213e0]: { 
+	}
 }
 
-STACK:
-called from : func = StackResize, line = 62
-born in: file = src/main.cpp, func = main, line = 15
-size     = 2
-capacity = 4
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1458 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1458
+Stack_t[0000020fbbe213e0] at src/stack.cpp:92 born at src/main.cpp:18:
+{
+	size     = 1
+	capacity = 2
 
-data hash  = 879172923529253747
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a0 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a0
+
+	data hash  = 7509926304303701320
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+	}
 }
 
-STACK:
-called from : func = StackPush, line = 132
-born in: file = src/main.cpp, func = main, line = 15
-size     = 3
-capacity = 4
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1458 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1458
+Stack_t[0000020fbbe213e0] at src/stack.cpp:79 born at src/main.cpp:18:
+{
+	size     = 1
+	capacity = 2
 
-data hash  = 909804503234542728
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a0 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a0
+
+	data hash  = 7509926304303701320
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+	}
 }
 
-STACK:
-called from : func = StackPush, line = 117
-born in: file = src/main.cpp, func = main, line = 15
-size     = 3
-capacity = 4
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1458 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1458
+Stack_t[0000020fbbe213e0] at src/stack.cpp:92 born at src/main.cpp:18:
+{
+	size     = 2
+	capacity = 2
 
-data hash  = 909804503234542728
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a0 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a0
+
+	data hash  = 7509947400432974936
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+	}
 }
 
-STACK:
-called from : func = StackPush, line = 132
-born in: file = src/main.cpp, func = main, line = 15
-size     = 4
-capacity = 4
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1458 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1458
+Stack_t[0000020fbbe213e0] at src/stack.cpp:79 born at src/main.cpp:18:
+{
+	size     = 2
+	capacity = 2
 
-data hash  = 923727948555128629
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
-   data[3] = 300 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a0 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a0
+
+	data hash  = 7509947400432974936
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+	}
 }
 
-STACK:
-called from : func = StackPush, line = 117
-born in: file = src/main.cpp, func = main, line = 15
-size     = 4
-capacity = 4
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1458 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1458
+Stack_t[0000020fbbe213e0] at src/stack.cpp:138 born at src/main.cpp:18:
+{
+	size     = 2
+	capacity = 2
 
-data hash  = 923727948555128629
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
-   data[3] = 300 
-}
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a0 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a0
 
-STACK:
-called from : func = StackResize, line = 49
-born in: file = src/main.cpp, func = main, line = 15
-size     = 4
-capacity = 4
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1458 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1458
+	data hash  = 7509947400432974936
 
-data hash  = 923727948555128629
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
-   data[3] = 300 
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+	}
 }
 
 
 RECALLOC!
-STACK:
-called from : func = StackDataRecalloc, line = 109
-born in: file = src/main.cpp, func = main, line = 15
-size     = 4
-capacity = 8
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1468 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1468
+Stack_t[0000020fbbe213e0] at src/stack.cpp:185 born at src/main.cpp:18:
+{
+	size     = 2
+	capacity = 4
 
-data hash  = -4258159296555289527
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
-   data[3] = 300 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a8
+
+	data hash  = -8854453429634759006
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+	}
 }
 
-STACK:
-called from : func = StackResize, line = 62
-born in: file = src/main.cpp, func = main, line = 15
-size     = 4
-capacity = 8
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1468 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1468
+Stack_t[0000020fbbe213e0] at src/stack.cpp:151 born at src/main.cpp:18:
+{
+	size     = 2
+	capacity = 4
 
-data hash  = -4258159296555289527
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
-   data[3] = 300 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a8
+
+	data hash  = -8854453429634759006
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+	}
 }
 
-STACK:
-called from : func = StackPush, line = 132
-born in: file = src/main.cpp, func = main, line = 15
-size     = 5
-capacity = 8
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1468 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1468
+Stack_t[0000020fbbe213e0] at src/stack.cpp:92 born at src/main.cpp:18:
+{
+	size     = 3
+	capacity = 4
 
-data hash  = 45793383716646042
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
-   data[3] = 300 
-   data[4] = 80 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a8
+
+	data hash  = -8853525199946719945
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+	}
 }
 
-STACK:
-called from : func = StackPop, line = 139
-born in: file = src/main.cpp, func = main, line = 15
-size     = 5
-capacity = 8
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1468 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1468
+Stack_t[0000020fbbe213e0] at src/stack.cpp:79 born at src/main.cpp:18:
+{
+	size     = 3
+	capacity = 4
 
-data hash  = 45793383716646042
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
-   data[3] = 300 
-   data[4] = 80 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a8
+
+	data hash  = -8853525199946719945
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+	}
 }
 
-STACK:
-called from : func = StackPop, line = 159
-born in: file = src/main.cpp, func = main, line = 15
-size     = 4
-capacity = 8
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1468 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1468
+Stack_t[0000020fbbe213e0] at src/stack.cpp:92 born at src/main.cpp:18:
+{
+	size     = 4
+	capacity = 4
 
-data hash  = 45793383716646041
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
-   data[3] = 300 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a8
+
+	data hash  = -8853103277361247644
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+		data[3] = 300 
+	}
 }
 
-STACK:
-called from : func = StackPop, line = 139
-born in: file = src/main.cpp, func = main, line = 15
-size     = 4
-capacity = 8
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1468 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1468
+Stack_t[0000020fbbe213e0] at src/stack.cpp:79 born at src/main.cpp:18:
+{
+	size     = 4
+	capacity = 4
 
-data hash  = 45793383716646041
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
-   data[3] = 300 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a8
+
+	data hash  = -8853103277361247644
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+		data[3] = 300 
+	}
 }
 
-STACK:
-called from : func = StackPop, line = 159
-born in: file = src/main.cpp, func = main, line = 15
-size     = 3
-capacity = 8
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1468 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1468
+Stack_t[0000020fbbe213e0] at src/stack.cpp:138 born at src/main.cpp:18:
+{
+	size     = 4
+	capacity = 4
 
-data hash  = 45793383716646040
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214a8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214a8
+
+	data hash  = -8853103277361247644
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+		data[3] = 300 
+	}
 }
 
-STACK:
-called from : func = StackPop, line = 139
-born in: file = src/main.cpp, func = main, line = 15
-size     = 3
-capacity = 8
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1468 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1468
 
-data hash  = 45793383716646040
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
-   data[2] = 20 
+RECALLOC!
+Stack_t[0000020fbbe213e0] at src/stack.cpp:185 born at src/main.cpp:18:
+{
+	size     = 4
+	capacity = 8
+
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214b8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214b8
+
+	data hash  = -3420207716998062344
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+		data[3] = 300 
+	}
 }
 
-STACK:
-called from : func = StackPop, line = 159
-born in: file = src/main.cpp, func = main, line = 15
-size     = 2
-capacity = 8
-left canar : 3735928559  			right:  3735928559
-&left canar: 0000024b0ecd1440    &right:       0000024b0ecd1468 
-&data[0]   : 0000024b0ecd1448    &data[capa] : 0000024b0ecd1468
+Stack_t[0000020fbbe213e0] at src/stack.cpp:151 born at src/main.cpp:18:
+{
+	size     = 4
+	capacity = 8
 
-data hash  = 45793383716646039
-data [000000ec0cbff770]: { 
-   data[0] = 10 
-   data[1] = 15 
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214b8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214b8
+
+	data hash  = -3420207716998062344
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+		data[3] = 300 
+	}
+}
+
+Stack_t[0000020fbbe213e0] at src/stack.cpp:92 born at src/main.cpp:18:
+{
+	size     = 5
+	capacity = 8
+
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214b8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214b8
+
+	data hash  = 623160804100083017
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+		data[3] = 300 
+		data[4] = 80 
+	}
+}
+
+Stack_t[0000020fbbe213e0] at src/stack.cpp:101 born at src/main.cpp:18:
+{
+	size     = 5
+	capacity = 8
+
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214b8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214b8
+
+	data hash  = 623160804100083017
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+		data[3] = 300 
+		data[4] = 80 
+	}
+}
+
+Stack_t[0000020fbbe213e0] at src/stack.cpp:121 born at src/main.cpp:18:
+{
+	size     = 4
+	capacity = 8
+
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214b8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214b8
+
+	data hash  = 623160804100083016
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+		data[3] = 300 
+	}
+}
+
+Stack_t[0000020fbbe213e0] at src/stack.cpp:101 born at src/main.cpp:18:
+{
+	size     = 4
+	capacity = 8
+
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214b8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214b8
+
+	data hash  = 623160804100083016
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+		data[3] = 300 
+	}
+}
+
+Stack_t[0000020fbbe213e0] at src/stack.cpp:121 born at src/main.cpp:18:
+{
+	size     = 3
+	capacity = 8
+
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214b8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214b8
+
+	data hash  = 623160804100083015
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+	}
+}
+
+Stack_t[0000020fbbe213e0] at src/stack.cpp:101 born at src/main.cpp:18:
+{
+	size     = 3
+	capacity = 8
+
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214b8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214b8
+
+	data hash  = 623160804100083015
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+		data[2] = 20 
+	}
+}
+
+Stack_t[0000020fbbe213e0] at src/stack.cpp:121 born at src/main.cpp:18:
+{
+	size     = 2
+	capacity = 8
+
+	left canar : 3735928559			right canar:  3735928559
+	&left canar: 0000020fbbe21490	&right:       0000020fbbe214b8 
+	&data[0]   : 0000020fbbe21498	&data[capa] : 0000020fbbe214b8
+
+	data hash  = 623160804100083014
+
+	data [0000020fbbe213e0]: { 
+		data[0] = 10 
+		data[1] = 15 
+	}
 }
 
