@@ -4,21 +4,23 @@
 #include "stack.h"
 #include "stack_debug.h"
 
-static int STK_ENCODE_KEY = 0xDEADBEAF;
+static uint64_t POISON         = 0xDEB41C;
+static uint64_t STK_ENCODE_KEY = 0xDEADBEAF;
 
 static StkAssertRes StackResize       (Stack_t *stk, ResizeValue resize_val);
-static StackElem_t *StackDataRecalloc (Stack_t *stk, int new_capacity);
+static StackElem_t *StackDataRecalloc (Stack_t *stk, size_t new_capacity);
 
-static StkAssertRes StackAssert (Stack_t *stk, const char *file, const int line);
-static void         StackDump   (Stack_t *stk, const char *file, const int line);
-static int          StackOK     (Stack_t *stk);
-static size_t       GetDataHash (Stack_t *stk);
+static StkAssertRes StackAssert  (Stack_t *stk, const char *file, const int line);
+static void         StackDump    (Stack_t *stk, const char *file, const int line);
+static int          StackOK      (Stack_t *stk);
+static size_t       GetStackHash (Stack_t *stk);
+static size_t       GetDataHash  (Stack_t *stk);
 
 static StackID  StackEncode (Stack_t *stk);
 static Stack_t *StackDecode (StackID code);
 
 
-StkAssertRes StackCtor (StackID *code, const char* file, const int line)
+StkAssertRes StackCtor (StackID *code, int start_capacity, const char* file, const int line)
 {
     Stack_t *stk = (Stack_t *) calloc(1, sizeof(Stack_t));
 
@@ -28,11 +30,14 @@ StkAssertRes StackCtor (StackID *code, const char* file, const int line)
         stk->logs_file = fopen("logs.txt", "w")                                                 \
     );
 
+    ON_DEBUG (setvbuf(stk->logs_file, NULL, _IONBF, 0));
+
     StackElem_t *whole_data = (StackElem_t *) calloc(2, CANARY_SIZE);
     stk->data = (StackElem_t *) ((char *) whole_data + CANARY_SIZE);
     
     stk->size = 0;
     stk->capacity = 0;
+    stk->start_capacity = start_capacity;
 
     ON_CANARY (    
         stk->left_data_canary_ptr  = (canary_t *) ((char *)stk->data - CANARY_SIZE);
@@ -42,8 +47,10 @@ StkAssertRes StackCtor (StackID *code, const char* file, const int line)
     )
 
     ON_HASH (
-        stk->hash = GetDataHash(stk);
+        stk->hash = GetStackHash(stk);
     )
+
+    stk->data = (StackElem_t *) StackDataRecalloc(stk, start_capacity);    
 
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
@@ -56,6 +63,8 @@ StkAssertRes StackCtor (StackID *code, const char* file, const int line)
 StkAssertRes StackDtor(StackID code)
 {
     Stack_t *stk = StackDecode(code);
+
+    STACK_ASSERT(stk, STK_ASSERT_ERR);
 
     free((char *)stk->data - CANARY_SIZE);
     stk->data = NULL;
@@ -86,7 +95,7 @@ StkAssertRes StackPush(StackID code, StackElem_t value)
     stk->data[stk->size] = value; 
     stk->size++;
 
-    ON_HASH(stk->hash = GetDataHash(stk));
+    ON_HASH(stk->hash = GetStackHash(stk));
 
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
@@ -100,7 +109,7 @@ StkAssertRes StackPop(StackID code, StackElem_t *stk_elem)
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
 
-    if ((stk->size <= stk->capacity / 4) && (stk->capacity > START_STACK_SIZE))
+    if ((stk->size <= stk->capacity / 4) && (stk->capacity > stk->start_capacity))
     {
         ON_DEBUG(fprintf(stk->logs_file, "\n\nPOP_RECALLOC!\n"));
         StackResize(stk, DECREASE);
@@ -112,13 +121,17 @@ StkAssertRes StackPop(StackID code, StackElem_t *stk_elem)
         return STK_ASSERT_ERR;
     }
 
-    *stk_elem = stk->data[stk->size - 1];
+    StackElem_t tmp = 0;
+    tmp = stk->data[stk->size - 1];
+    stk->data[stk->size - 1] = (StackElem_t) POISON;
     stk->size--;
 
-    ON_HASH(stk->hash = GetDataHash(stk));
+    ON_HASH(stk->hash = GetStackHash(stk));
+    *stk_elem = tmp;
 
     STACK_ASSERT(stk, STK_ASSERT_ERR);
     ON_DEBUG(STACK_DUMP(stk));
+
     return STK_ASSERT_OK;
 }
 
@@ -139,7 +152,9 @@ static StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
 
     if (stk->capacity == 0)
     {
-        stk->data = (StackElem_t *) StackDataRecalloc(stk, START_STACK_SIZE);
+        stk->data = (StackElem_t *) StackDataRecalloc(stk, START_DATA_SIZE);
+        stk->start_capacity = START_DATA_SIZE;
+        ON_HASH(stk->hash = GetStackHash(stk));
         STACK_ASSERT(stk, STK_ASSERT_ERR);
         return STK_ASSERT_OK;
     }
@@ -153,14 +168,14 @@ static StkAssertRes StackResize(Stack_t *stk, ResizeValue resize_val)
     return STK_ASSERT_OK;
 } 
 
-static StackElem_t *StackDataRecalloc(Stack_t *stk, int new_capacity)
+static StackElem_t *StackDataRecalloc(Stack_t *stk, size_t new_capacity)
 {
     ON_DEBUG(fprintf(stk->logs_file, "\nRECALLOC!\n"));
 
-    size_t new_byte_capa = new_capacity * sizeof(StackElem_t);
-    ON_CANARY( size_t residual = (CANARY_SIZE - new_byte_capa % CANARY_SIZE) % CANARY_SIZE );
+    size_t new_byte_capacity = new_capacity * sizeof(StackElem_t);
+    ON_CANARY( size_t residual = (CANARY_SIZE - new_byte_capacity % CANARY_SIZE) % CANARY_SIZE );
 
-    size_t new_data_bytesize = new_byte_capa  ON_CANARY(+ 2 * CANARY_SIZE + residual);
+    size_t new_data_bytesize = new_byte_capacity  ON_CANARY(+ 2 * CANARY_SIZE + residual);
 
     // stk->data = (StackElem_t *) realloc((char *)stk->data - CANARY_SIZE, new_data_bytesize);
     char * tmp_ptr = (char *) realloc((char *)stk->data  ON_CANARY( - CANARY_SIZE ), new_data_bytesize);
@@ -168,18 +183,24 @@ static StackElem_t *StackDataRecalloc(Stack_t *stk, int new_capacity)
 
     #ifdef CANARY_PROTECTION
     stk->left_data_canary_ptr  = (canary_t*) ((char *)stk->data ON_CANARY(- CANARY_SIZE));
-    stk->right_data_canary_ptr = (canary_t*) ((char *)stk->data + new_byte_capa ON_CANARY(+ residual));
+    stk->right_data_canary_ptr = (canary_t*) ((char *)stk->data + new_byte_capacity ON_CANARY(+ residual));
 
     *(stk->left_data_canary_ptr)  = CANARY_VALUE; 
     *(stk->right_data_canary_ptr) = CANARY_VALUE;
     #endif
 
-    if (new_capacity > stk->capacity)
-        memset(stk->data + stk->capacity, 0, new_byte_capa ON_CANARY(+ residual) - stk->capacity * sizeof(StackElem_t));
+    if (new_capacity > (size_t) stk->capacity)
+    {
+        // memset(stk->data + stk->capacity, (StackElem_t) POISON, new_byte_capacity ON_CANARY(+ residual) - stk->capacity * sizeof(StackElem_t)); // 
+        for (int i = stk->capacity; i < (int) new_capacity; i++)
+        {
+            stk->data[i] = (StackElem_t) POISON;
+        }
+    }
 
-    stk->capacity = new_capacity;
+    stk->capacity = (int) new_capacity;
 
-    ON_HASH(stk->hash = GetDataHash(stk));
+    ON_HASH(stk->hash = GetStackHash(stk));
 
     STACK_ASSERT(stk, NULL);
     ON_DEBUG(STACK_DUMP(stk));
@@ -195,7 +216,8 @@ static StkAssertRes StackAssert(Stack_t *stk, const char *file, const int line)
         return STK_ASSERT_OK;
     else 
     {
-        fprintf(stderr, "myassertion failed in\t%s:%d\t", file, line);
+        fprintf(stderr, "myassertion failed in\t%s:%d\nErrors:\t", file, line);
+        PrintStackErr(StkError);
         return STK_ASSERT_ERR;
     }
 }
@@ -216,7 +238,7 @@ int PrintStackErr(int error)
     PRINT_ERROR(error, STK_SIZE_ERR);
     PRINT_ERROR(error, STK_CAPACITY_ERR);
 
-    #undef PUT_ERROR  
+    #undef PRINT_ERROR  
 
     printf("\n");
     
@@ -225,6 +247,12 @@ int PrintStackErr(int error)
 
 static int StackOK(Stack_t *stk)
 {
+    if (stk == NULL)
+        StkError |= STK_PTR_DATA_ERR;
+
+    if (stk->data == NULL)
+        StkError |= STK_DATA_ERR;
+
     #ifdef CANARY_PROTECTION
     if (stk->left_data_canary_ptr == NULL || stk->right_data_canary_ptr  == NULL \
             || *stk->left_data_canary_ptr != CANARY_VALUE || *stk->right_data_canary_ptr != CANARY_VALUE)
@@ -232,16 +260,10 @@ static int StackOK(Stack_t *stk)
     #endif
 
     #ifdef HASH_PROTECTION
-    size_t cur_hash = GetDataHash(stk);
+    size_t cur_hash = GetStackHash(stk);
     if (stk->hash != cur_hash)
         StkError |= HASH_ERR;
     #endif
-
-    if (stk == NULL)
-        StkError |= STK_PTR_DATA_ERR;
-
-    if (stk->data == NULL)
-        StkError |= STK_DATA_ERR;
     
     if (stk->size < 0 || stk->size > stk->capacity)
         StkError |= STK_SIZE_ERR;
@@ -271,8 +293,16 @@ static void StackDump(Stack_t *stk, const char *file, const int line)
     #endif
 
     fprintf(stk->logs_file, "\tdata [%p]: { \n", stk);
-    for (int i = 0; i < stk->size; i++)
+    for (int i = 0; i < stk->capacity; i++)
+    {
+        if (stk->data[i] == (StackElem_t) POISON)
+        {
+            fprintf(stk->logs_file, "\t\tdata[%d] = -POISON-\n", i);
+            continue;
+        }
+
         fprintf(stk->logs_file, "\t\tdata[%d] = %d \n", i, stk->data[i]);
+    }
 
     fprintf(stk->logs_file, "\t}\n");
     fprintf(stk->logs_file, "}\n\n");
@@ -280,10 +310,19 @@ static void StackDump(Stack_t *stk, const char *file, const int line)
     );
 }
 
-static size_t GetDataHash(Stack_t *stk)
+static size_t GetStackHash(Stack_t *stk)
 {
     size_t hash = 5381;
+    hash = hash * 33 + GetDataHash(stk);
 
+    size_t hash_size = sizeof(Stack_t);
+    
+    for (size_t byte_num = 0  ON_HASH(+ sizeof(size_t)); byte_num < hash_size; byte_num++)
+    {
+        hash = hash * 33 + *((char *)stk + byte_num);
+    }
+
+    /*
     for (int i = 0; i < stk->capacity; i++)
     {
         hash = hash * 33 + stk->data[i];
@@ -303,6 +342,19 @@ static size_t GetDataHash(Stack_t *stk)
     );
 
     hash = hash * 33 +          stk->size;
+    */
+
+    return hash;
+}
+
+static size_t GetDataHash(Stack_t *stk)
+{
+    size_t hash = 5381;
+
+    for (int i = 0; i < stk->capacity; i++)
+    {
+        hash = hash * 33 + stk->data[i];
+    }
 
     return hash;
 }

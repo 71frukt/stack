@@ -1,37 +1,45 @@
 #include <stdio.h>
 #include <assert.h>
 
-// #define DEBUG
-//typedef int StackElem_t;
 int StkError = 0;
 
 #include "stack.h"
 
+void BreakAfterDtor();
 
 int main()
 {
     fprintf(stderr, "\n START \n");
-    
+
     StackID stk_id = 0; 
-    // Stack_t stack = {INIT_DEBUG_STKVARS};
-    
-    STACK_CTOR(&stk_id)    verified;
-    StackPush(stk_id, 10)  verified;
-    StackPush(stk_id, 15)  verified;
-    StackPush(stk_id, 20)  verified;
-    StackPush(stk_id, 300) verified;
-    StackPush(stk_id, 80)  verified;
+    STACK_CTOR(&stk_id, 0);
 
-    // size_t *ptr;
-    // for (int i = 0; i < 1000; i++)
-        // ptr[i] = 0;
-
-    StackElem_t el = 0;
-    StackPop(stk_id, &el) verified;
-    StackPop(stk_id, &el) verified;
-    StackPop(stk_id, &el) verified;
+    //BreakAfterDtor();
 
     StackDtor(stk_id);
 
     fprintf(stderr, "\n END \n"); 
+}
+
+void BreakAfterDtor()
+{
+    StackID stk_id = 0; 
+    STACK_CTOR(&stk_id, 0);
+
+    Stack_t *bad_ptr = (Stack_t *) (stk_id ^ 0xDEADBEAF);
+
+    StackPush(stk_id, 10);
+    StackPush(stk_id, 15);
+    StackPush(stk_id, 20);
+    StackPush(stk_id, 300);
+    StackPush(stk_id, 80);
+
+    bad_ptr->data[3] = 4;
+
+    StackDtor(stk_id);
+
+    for (int i = 0; i < bad_ptr->capacity; i++)
+    {
+        printf("data[%d] = %d\n", i, bad_ptr->data[i]);
+    }
 }

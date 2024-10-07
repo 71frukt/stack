@@ -25,6 +25,10 @@ enum ResizeValue
 
 struct Stack_t
 {
+    #ifdef HASH_PROTECTION
+    size_t hash;
+    #endif
+
     #ifdef DEBUG
     int line_born_in;
     const char *file_born_in;
@@ -36,23 +40,21 @@ struct Stack_t
     canary_t *right_data_canary_ptr;
     #endif
 
-    #ifdef HASH_PROTECTION
-    size_t hash;
-    #endif
-
     int size;
     int capacity;
+    int start_capacity;
+    
     StackElem_t *data;
 };
 
-const StackElem_t START_STACK_SIZE = 2;
+const StackElem_t START_DATA_SIZE = 2;
 
-StkAssertRes StackCtor (StackID *code, const char* file, const int line);
+StkAssertRes StackCtor (StackID *code, int start_capasity, const char* file, const int line);
 StkAssertRes StackDtor (StackID code);
 StkAssertRes StackPush (StackID code, StackElem_t value);
 StkAssertRes StackPop  (StackID code, StackElem_t *stk_elem);
 int PrintStackErr (int error);
 
-#define STACK_CTOR(code) StackCtor(code, __FILE__, __LINE__)
+#define STACK_CTOR(code, start_capacity) StackCtor(code, start_capacity, __FILE__, __LINE__)
 
 #endif
