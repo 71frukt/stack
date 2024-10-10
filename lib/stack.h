@@ -1,4 +1,4 @@
-#ifndef STACK_H
+#ifndef STACK_H     //уси
 #define STACK_H
 
 #include <stdio.h>
