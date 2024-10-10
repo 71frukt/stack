@@ -25,26 +25,28 @@ enum ResizeValue
 
 struct Stack_t
 {
-    #ifdef HASH_PROTECTION
-    size_t hash;
-    #endif
+    ON_HASH (size_t hash);
 
-    #ifdef DEBUG
+    ON_CANARY (canary_t left_stack_canary);
+
+    ON_DEBUG (
     int line_born_in;
     const char *file_born_in;
     FILE *logs_file;
-    #endif
+    )
 
-    #ifdef CANARY_PROTECTION
+    ON_CANARY (
     canary_t *left_data_canary_ptr;
     canary_t *right_data_canary_ptr;
-    #endif
+    )
 
     int size;
     int capacity;
     int start_capacity;
     
     StackElem_t *data;
+
+    ON_CANARY (canary_t right_stack_canary);
 };
 
 const StackElem_t START_DATA_SIZE = 2;

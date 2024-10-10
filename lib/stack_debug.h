@@ -13,12 +13,13 @@ enum StkErrorEnum
 {
     STK_OK = 0,
 
-    CANARY_ERR       = (1 << 0),
-    HASH_ERR         = (1 << 1),
-    STK_PTR_DATA_ERR = (1 << 2),
-    STK_DATA_ERR     = (1 << 3),
-    STK_SIZE_ERR     = (1 << 4),
-    STK_CAPACITY_ERR = (1 << 5)
+    STACK_CANARY_ERR = (1 << 0),
+    DATA_CANARY_ERR  = (1 << 1),
+    HASH_ERR         = (1 << 2),
+    STK_PTR_DATA_ERR = (1 << 3),
+    STK_DATA_ERR     = (1 << 4),
+    STK_SIZE_ERR     = (1 << 5),
+    STK_CAPACITY_ERR = (1 << 6)
 };
 
 
@@ -29,7 +30,7 @@ enum StkErrorEnum
 
 #define ON_DEBUG(...)  __VA_ARGS__
 
-#define verified  || PrintStackErr(StkError)
+#define asserted  || PrintStackErr(StkError)
 
 #define INIT_DEBUG_STKVARS                                                                  \
     .line_born_in = __LINE__,                                                               \
@@ -38,7 +39,7 @@ enum StkErrorEnum
     .logs_file = fopen("logs.txt", "w")                                                     \
 
 #define STACK_ASSERT(stk, returned_error)                                                   \
-    if (StackAssert(stk, __FILE__, __LINE__) == STK_ASSERT_ERR)                   \
+    if (StackAssert(stk, __FILE__, __LINE__) == STK_ASSERT_ERR)                             \
     {                                                                                       \
         STACK_DUMP(stk);                                                                    \
         return returned_error;                                                              \

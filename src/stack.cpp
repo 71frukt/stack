@@ -10,17 +10,17 @@ static uint64_t STK_ENCODE_KEY = 0xDEADBEAF;
 static StkAssertRes StackResize       (Stack_t *stk, ResizeValue resize_val);
 static StackElem_t *StackDataRecalloc (Stack_t *stk, size_t new_capacity);
 
-static StkAssertRes StackAssert  (Stack_t *stk, const char *file, const int line);
-static void         StackDump    (Stack_t *stk, const char *file, const int line);
-static int          StackOK      (Stack_t *stk);
-static size_t       GetStackHash (Stack_t *stk);
-static size_t       GetDataHash  (Stack_t *stk);
+static StkAssertRes StackAssert       (Stack_t *stk, const char *file, const int line);
+static void         StackDump         (Stack_t *stk, const char *file, const int line);
+static int          StackOK           (Stack_t *stk);
+static size_t       GetStackHash      (Stack_t *stk);
+static size_t       GetDataHash       (Stack_t *stk);
 
-static StackID  StackEncode (Stack_t *stk);
-static Stack_t *StackDecode (StackID code);
+static StackID      StackEncode       (Stack_t *stk);
+static Stack_t     *StackDecode       (StackID code);
 
 
-StkAssertRes StackCtor (StackID *code, int start_capacity, const char* file, const int line)
+StkAssertRes StackCtor(StackID *code, int start_capacity, const char* file, const int line)
 {
     Stack_t *stk = (Stack_t *) calloc(1, sizeof(Stack_t));
 
@@ -40,6 +40,9 @@ StkAssertRes StackCtor (StackID *code, int start_capacity, const char* file, con
     stk->start_capacity = start_capacity;
 
     ON_CANARY (    
+        stk->left_stack_canary  = CANARY_VALUE;
+        stk->right_stack_canary = CANARY_VALUE;
+
         stk->left_data_canary_ptr  = (canary_t *) ((char *)stk->data - CANARY_SIZE);
         stk->right_data_canary_ptr = (canary_t *) stk->data; 
         *(stk->left_data_canary_ptr)  = CANARY_VALUE;
@@ -66,8 +69,15 @@ StkAssertRes StackDtor(StackID code)
 
     STACK_ASSERT(stk, STK_ASSERT_ERR);
 
-    free((char *)stk->data - CANARY_SIZE);
-    stk->data = NULL;
+    if (stk == NULL)
+        return STK_ASSERT_ERR;
+
+    if (stk->data != NULL)
+    {
+        free((char *)stk->data - CANARY_SIZE);
+        stk->data = NULL;
+    }
+    
     stk->capacity = 0;
     stk->size = 0;
 
@@ -123,7 +133,8 @@ StkAssertRes StackPop(StackID code, StackElem_t *stk_elem)
 
     StackElem_t tmp = 0;
     tmp = stk->data[stk->size - 1];
-    stk->data[stk->size - 1] = (StackElem_t) POISON;
+    ON_DEBUG(stk->data[stk->size - 1] = (StackElem_t) POISON);
+
     stk->size--;
 
     ON_HASH(stk->hash = GetStackHash(stk));
@@ -189,14 +200,16 @@ static StackElem_t *StackDataRecalloc(Stack_t *stk, size_t new_capacity)
     *(stk->right_data_canary_ptr) = CANARY_VALUE;
     #endif
 
-    if (new_capacity > (size_t) stk->capacity)
-    {
-        // memset(stk->data + stk->capacity, (StackElem_t) POISON, new_byte_capacity ON_CANARY(+ residual) - stk->capacity * sizeof(StackElem_t)); // 
-        for (int i = stk->capacity; i < (int) new_capacity; i++)
+    ON_DEBUG (
+        if (new_capacity > (size_t) stk->capacity)
         {
-            stk->data[i] = (StackElem_t) POISON;
+            // memset(stk->data + stk->capacity, (StackElem_t) POISON, new_byte_capacity ON_CANARY(+ residual) - stk->capacity * sizeof(StackElem_t)); // 
+            for (int i = stk->capacity; i < (int) new_capacity; i++)
+            {
+                stk->data[i] = (StackElem_t) POISON;
+            }
         }
-    }
+    )
 
     stk->capacity = (int) new_capacity;
 
@@ -230,13 +243,14 @@ int PrintStackErr(int error)
         fprintf(stderr, #code);                         \
         fprintf(stderr, " ");                           \
     }                                                   
-
-    PRINT_ERROR(error, CANARY_ERR);
-    PRINT_ERROR(error, HASH_ERR);
-    PRINT_ERROR(error, STK_PTR_DATA_ERR);
-    PRINT_ERROR(error, STK_DATA_ERR);
-    PRINT_ERROR(error, STK_SIZE_ERR);
-    PRINT_ERROR(error, STK_CAPACITY_ERR);
+    
+    PRINT_ERROR (error, STK_PTR_DATA_ERR);
+    PRINT_ERROR (error, STACK_CANARY_ERR);
+    PRINT_ERROR (error, DATA_CANARY_ERR);
+    PRINT_ERROR (error, HASH_ERR);
+    PRINT_ERROR (error, STK_DATA_ERR);
+    PRINT_ERROR (error, STK_SIZE_ERR);
+    PRINT_ERROR (error, STK_CAPACITY_ERR);
 
     #undef PRINT_ERROR  
 
@@ -248,15 +262,21 @@ int PrintStackErr(int error)
 static int StackOK(Stack_t *stk)
 {
     if (stk == NULL)
+    {
         StkError |= STK_PTR_DATA_ERR;
+        return StkError;
+    }
 
     if (stk->data == NULL)
         StkError |= STK_DATA_ERR;
 
     #ifdef CANARY_PROTECTION
+    if (stk->left_stack_canary != CANARY_VALUE || stk->right_stack_canary != CANARY_VALUE)
+        StkError |= STACK_CANARY_ERR;
+    
     if (stk->left_data_canary_ptr == NULL || stk->right_data_canary_ptr  == NULL \
             || *stk->left_data_canary_ptr != CANARY_VALUE || *stk->right_data_canary_ptr != CANARY_VALUE)
-        StkError |= CANARY_ERR;
+        StkError |= DATA_CANARY_ERR;
     #endif
 
     #ifdef HASH_PROTECTION
