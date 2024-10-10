@@ -4,6 +4,34 @@
 #include "stack.h"
 #include "stack_debug.h"
 
+struct Stack_t
+{
+    ON_HASH (size_t hash);
+
+    ON_CANARY (canary_t left_stack_canary);
+
+    ON_DEBUG (
+    int line_born_in;
+    const char *file_born_in;
+    FILE *logs_file;
+    )
+
+    ON_CANARY (
+    canary_t *left_data_canary_ptr;
+    canary_t *right_data_canary_ptr;
+    )
+
+    int size;
+    int capacity;
+    int start_capacity;
+    
+    StackElem_t *data;
+
+    ON_CANARY (canary_t right_stack_canary);
+};
+
+int StkError = 0;
+
 static uint64_t POISON         = 0xDEB41C;
 static uint64_t STK_ENCODE_KEY = 0xDEADBEAF;
 

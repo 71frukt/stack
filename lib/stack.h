@@ -23,32 +23,6 @@ enum ResizeValue
     DECREASE
 };
 
-struct Stack_t
-{
-    ON_HASH (size_t hash);
-
-    ON_CANARY (canary_t left_stack_canary);
-
-    ON_DEBUG (
-    int line_born_in;
-    const char *file_born_in;
-    FILE *logs_file;
-    )
-
-    ON_CANARY (
-    canary_t *left_data_canary_ptr;
-    canary_t *right_data_canary_ptr;
-    )
-
-    int size;
-    int capacity;
-    int start_capacity;
-    
-    StackElem_t *data;
-
-    ON_CANARY (canary_t right_stack_canary);
-};
-
 const StackElem_t START_DATA_SIZE = 2;
 
 StkAssertRes StackCtor (StackID *code, int start_capasity, const char* file, const int line);
