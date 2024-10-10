@@ -30,7 +30,7 @@ struct Stack_t
     ON_CANARY (canary_t right_stack_canary);
 };
 
-int StkError = 0;
+static int StkError = 0;
 
 static uint64_t POISON         = 0xDEB41C;
 static uint64_t STK_ENCODE_KEY = 0xDEADBEAF;

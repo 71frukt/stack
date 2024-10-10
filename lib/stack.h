@@ -15,7 +15,6 @@
 typedef int StackElem_t;
 
 typedef int64_t StackID;
-extern int StkError;
 
 enum ResizeValue
 {
