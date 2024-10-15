@@ -55,7 +55,7 @@ StkAssertRes StackCtor(StackID *code, int start_capacity, const char* file, cons
     ON_DEBUG (                                                                                  \
         stk->file_born_in = file ,                                                              \
         stk->line_born_in = line,                                                               \
-        stk->logs_file = fopen("logs.txt", "w")                                                 \
+        stk->logs_file = fopen("txts/logs.txt", "w")                                                 \
     );
 
     ON_DEBUG (setvbuf(stk->logs_file, NULL, _IONBF, 0));
@@ -153,10 +153,10 @@ StkAssertRes StackPop(StackID code, StackElem_t *stk_elem)
         StackResize(stk, DECREASE);
     }
 
-    if (stk->size <= 0)
+    if (stk->size < 0)
     {
         fprintf(stderr, "SIZE <= 0! \n");
-        return STK_ASSERT_ERR;
+        STACK_ASSERT(stk, STK_ASSERT_ERR);
     }
 
     StackElem_t tmp = 0;

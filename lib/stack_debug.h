@@ -36,7 +36,7 @@ enum StkErrorEnum
     .line_born_in = __LINE__,                                                               \
     .file_born_in = __FILE__,                                                               \
     .func_born_in = __func__,                                                               \
-    .logs_file = fopen("logs.txt", "w")                                                     \
+    .logs_file = fopen("txts/logs.txt", "w")                                                     \
 
 #define STACK_ASSERT(stk, returned_error)                                                   \
     if (StackAssert(stk, __FILE__, __LINE__) == STK_ASSERT_ERR)                             \
