@@ -30,7 +30,7 @@ enum StkErrorEnum
 
 #define ON_DEBUG(...)  __VA_ARGS__
 
-#define asserted  || PrintStackErr(StkError)
+#define stk_asserted  || PrintStackErr(StkError)
 
 #define INIT_DEBUG_STKVARS                                                                  \
     .line_born_in = __LINE__,                                                               \
@@ -47,7 +47,7 @@ enum StkErrorEnum
 
 
 #else 
-#define verified
+#define stk_verified
 #define INIT_DEBUG_STKVARS
 #define STACK_ASSERT(stk, returned_error)
 #define ON_DEBUG(...)

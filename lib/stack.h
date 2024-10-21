@@ -6,13 +6,13 @@
 #include <assert.h>
 #include <stdint.h>
 
-#define DEBUG
-#define CANARY_PROTECTION
-#define HASH_PROTECTION
+// #define DEBUG
+// #define CANARY_PROTECTION
+// #define HASH_PROTECTION
 
 #include "stack_debug.h"
 
-typedef int StackElem_t;
+typedef short StackElem_t;
 
 typedef int64_t StackID;
 
