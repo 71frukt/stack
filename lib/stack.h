@@ -12,7 +12,7 @@
 
 #include "stack_debug.h"
 
-typedef short StackElem_t;
+typedef int StackElem_t;
 
 typedef int64_t StackID;
 
