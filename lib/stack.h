@@ -6,9 +6,9 @@
 #include <assert.h>
 #include <stdint.h>
 
-#define DEBUG
-#define CANARY_PROTECTION
-#define HASH_PROTECTION
+// #define DEBUG
+// #define CANARY_PROTECTION
+// #define HASH_PROTECTION
 
 #include "stack_debug.h"
 
