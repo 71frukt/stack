@@ -55,7 +55,7 @@ StkAssertRes StackCtor(StackID *code, int start_capacity, const char* file, cons
     ON_DEBUG (                                                                                  \
         stk->file_born_in = file ,                                                              \
         stk->line_born_in = line,                                                               \
-        stk->logs_file = fopen("txts/logs/stack_logs.log", "w")                                                 \
+        stk->logs_file = fopen("build/logs/stack_logs.log", "w")                                                 \
     );
 
     // ON_DEBUG (setvbuf(stk->logs_file, NULL, _IONBF, 0));
@@ -351,13 +351,13 @@ static void StackDump(Stack_t *stk, const char *file, const int line)
     fprintf(stk->logs_file, "\tcapacity = %d\n\n", stk->capacity);
 
     #ifdef CANARY_PROTECTION
-    fprintf(stk->logs_file, "\tleft canar : %lld\t\t\tright canar:  %lld\n", *stk->left_data_canary_ptr, *stk->right_data_canary_ptr);
+    fprintf(stk->logs_file, "\tleft canar : %lu\t\t\tright canar:  %lu\n", *stk->left_data_canary_ptr, *stk->right_data_canary_ptr);
     fprintf(stk->logs_file, "\t&left canar: %p\t&right:       %p \n",  stk->left_data_canary_ptr, stk->right_data_canary_ptr);
     fprintf(stk->logs_file, "\t&data[0]   : %p\t&data[capa] : %p\n\n", stk->data, stk->data + stk->capacity);
     #endif
 
     #ifdef HASH_PROTECTION
-    fprintf(stk->logs_file, "\tdata hash  = %lld\n\n", stk->hash);
+    fprintf(stk->logs_file, "\tdata hash  = %lu\n\n", stk->hash);
     #endif
 
     fprintf(stk->logs_file, "\tdata [%p]: { \n", stk);

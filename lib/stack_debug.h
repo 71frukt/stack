@@ -1,5 +1,5 @@
-#ifndef STACK_DEBUG_MACROSES
-#define STACK_DEBUG_MACROSES
+#ifndef STACK_DEBUG_H
+#define STACK_DEBUG_H
 
 #include "stack.h"
 
@@ -26,7 +26,7 @@ enum StkErrorEnum
 #define STACK_DUMP(stk)  StackDump(stk, __FILE__, __LINE__)
 
 
-#ifdef DEBUG
+#ifdef STACK_DEBUG
 
 #define ON_DEBUG(...)  __VA_ARGS__
 
@@ -36,7 +36,7 @@ enum StkErrorEnum
     .line_born_in = __LINE__,                                                               \
     .file_born_in = __FILE__,                                                               \
     .func_born_in = __func__,                                                               \
-    .logs_file = fopen("txts/logs.txt", "w")                                                     \
+    .logs_file = fopen("build/logs.txt", "w")                                                     \
 
 #define STACK_ASSERT(stk, returned_error)                                                   \
     if (StackAssert(stk, __FILE__, __LINE__) == STK_ASSERT_ERR)                             \
