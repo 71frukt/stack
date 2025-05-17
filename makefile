@@ -91,7 +91,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR) $(DEP_DIR)
 -include $(THIS_PROJ_DEP)
 
 clean:
-	rm -rf $(THIS_PROJ_BUILD_DIR)
+	rm -rf $(BUILD_DIR)
 
 rebuild: clean all
 
